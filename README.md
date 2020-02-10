@@ -254,7 +254,22 @@ pip install opencv-contrib-python==3.4.2.16 -i "https://pypi.doubanio.com/simple
 
 ### 3、错误级别分析（Error level analysis，ELA）
 
-代码参考：https://github.com/redaelli/imago-forensics/blob/master/imago/extractor.py#L71
+>学习参考：   
+>http://www.errorlevelanalysis.com/   
+>http://fotoforensic.com/tutorial.php?tt=ela   
+>https://en.wikipedia.org/wiki/Error_level_analysis   
+>代码参考:   
+>https://github.com/redaelli/imago-forensics/blob/master/imago/extractor.py#L71
+
+**① 理论说明**
+
+ELA 全称：Error Level Analysis ，汉译为“错误级别分析”或者叫“误差分析”。通过检测特定压缩比率重新绘制图片后造成的误差分布，可用于识别JPEG图片的压缩。
+
+>Principe：Error Level Analysis (ELA) permits identifying areas within an image that are at different compression levels. With JPEG images, the entire picture should be at roughly the same level. If a section of the image is at a significantly different error level, then it likely indicates a digital modification.
+
+原理：错误级别分析可以识别出一幅图片不同压缩率的地方。JPEG图像全图应该大约是相同的压缩率。如果图片的某一部分有非常突出的错误压缩率，则它可能被数字化更改过。
+
+**② 编程**
 
 为了引入magic文件类型识别，安装 `python-magic-bin` 库。
 
@@ -262,11 +277,82 @@ pip install opencv-contrib-python==3.4.2.16 -i "https://pypi.doubanio.com/simple
 pip install -i http://mirrors.aliyun.com/pypi/simple/ python-magic-bin
 ```
 
-原图&效果图：
+代码文件：`./FeatureExtraction/img/ELA.py`
 
-![butterfly.jpg](./FeatureExtraction/img/butterfly.jpg)
+<details>
+<summary>带注释的代码</summary>
 
-![butterfly_ela.jpg](./FeatureExtraction/img/butterfly_ela.jpg)
+```py
+import os,sys
+import magic
+from PIL import Image, ImageChops, ImageEnhance
+
+
+def ela(filename, output_path):
+  print("****ELA is starting****")
+  if magic.from_file(filename, mime=True) == "image/jpeg":
+    # set tmp_image's quality_level to be resaved
+    quality_level = 80
+    # get fileRealName,.postfix
+    (filerealname, extension) = os.path.splitext(os.path.basename(filename))
+    # set tmp_image & ela_image path
+    tmp_path = os.path.join(output_path,filerealname+"_tmp.jpg")
+    ela_path = os.path.join(output_path,filerealname+"_ela.jpg")
+
+    # resave image
+    image = Image.open(filename)
+    image.save(tmp_path, 'JPEG', quality=quality_level)
+
+
+    tmp_image = Image.open(tmp_path)
+    # return abs of difference
+    ela_image = ImageChops.difference(image, tmp_image)
+    # return (min,max) two-truples with RGB 3 elements, eg. ((0,255),(0,255),(0,255))
+    extrema = ela_image.getextrema()
+    # get the max of RGB max
+    max_diff = max([ex[1] for ex in extrema])
+    # set scale to enhance
+    scale = 255/max_diff
+    # 'Brightness' indicates we will brignten img
+    # 'enhance' indicates the scale of brightness
+    # An enhancement factor of 0.0 gives a black image. A factor of 1.0 gives the original image.
+    ela_image = ImageEnhance.Brightness(ela_image).enhance(scale)
+
+    ela_image.save(ela_path)
+    os.remove(tmp_path)  # if remove this code, image will be resaved as tem_image and won't be removed.
+    print("****ELA has been completed****")
+  else:
+    print("ELA works only with JPEG")
+
+if __name__ == "__main__":
+  filename = "./img/webOriginalImg.jpg"
+  output_path = "./img"
+  ela(filename, output_path)
+```
+
+</details>
+
+**③ 原图&效果图**
+
+第一组
+
+原图 | ELA高亮图
+-|-
+![butterfly.jpg](./FeatureExtraction/img/butterfly.jpg) | ![butterfly_ela.jpg](./FeatureExtraction/img/butterfly_ela.jpg)
+![faketest.jpg](./FeatureExtraction/img/faketest.jpg) | ![faketest_ela.jpg](./FeatureExtraction/img/faketest_ela.jpg)
+
+第二组
+
+原图 | 网上的ELA高亮图 | 我自己做的ELA高亮图
+-|-|-
+![webOriginalImg.jpg](./FeatureExtraction/img/webOriginalImg.jpg) | ![webOriginalImg-ela.jpg](./FeatureExtraction/img/webOriginalImg-ela.jpg) | ![webOriginalImg_ela.jpg](./FeatureExtraction/img/webOriginalImg_ela.jpg)
+![dancersmiling.jpg](./FeatureExtraction/img/dancersmiling.jpg) | ![dancersmiling-ela.png](./FeatureExtraction/img/dancersmiling-ela.png) | ![dancersmiling_ela.jpg](./FeatureExtraction/img/dancersmiling_ela.jpg)
+
+第三组
+
+图1 | 图2 | 差别
+-|-|-
+![books.jpg](./FeatureExtraction/img/books.jpg) | ![books-edited.jpg](./FeatureExtraction/img/books-edited.jpg) | ![booksANDbooks-edited_diff.jpg](./FeatureExtraction/img/booksANDbooks-edited_diff.jpg) 
 
 ## 五、数据库预处理
 
