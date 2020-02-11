@@ -356,7 +356,144 @@ if __name__ == "__main__":
 
 ## 五、数据库预处理
 
+采用 OpenCV 和 face_recognition 做对比，用15张图片做实验
 
+完善后的代码如 `./DatabasePreprocessing/findfaceCV.py` 和 `./DatabasePreprocessing/findfaceFR.py` 所示。
+
+<details>
+<summary>代码一带注释最简版</summary>
+
+```py
+# use OpenCV to detect face from images & save them
+
+import cv2
+import os
+import time
+
+resize_x = 256
+resize_y = 256
+cantFindFaceImgs = []
+
+# Detect face rects
+def detect(img, cascade, list):
+    rects = cascade.detectMultiScale(img, scaleFactor = 1.3, minNeighbors = 4,
+                                     flags = cv2.CASCADE_SCALE_IMAGE)
+    if len(rects) == 0:
+        print("I haven't found a face in %s"%(list))
+        cantFindFaceImgs.append(list)
+        return []
+    rects[:, 2:] += rects[:, :2]
+    return rects
+
+if __name__ == '__main__':
+    start_time =time.clock()
+    # OpenCV Classifier
+    cascade = cv2.CascadeClassifier("E:\Program Files\Python\Python36\Lib\site-packages\opencv-master\data\haarcascades\haarcascade_frontalface_default.xml")
+    original_path = 'D:/Celeba/devel'
+    new_path = 'D:/Celeba_face/devel'
+    # os.listdir show all the filename(including extension)
+    imglist = os.listdir(original_path) 
+
+
+    for list in imglist:
+        img = cv2.imread(original_path+'/'+list)
+        rects = detect(img, cascade, list)
+        if len(rects) == 0:
+            print(list)
+        for x1, y1, x2, y2 in rects:
+            face = img[y1:y2, x1:x2]
+            resized_face = cv2.resize(face,(resize_x, resize_y))
+            # Save new img, named as original name in new directory, then we can find which are not be detected 
+            cv2.imwrite(new_path+'/CV_'+list, resized_face)
+
+    end_time = time.clock()
+    print("I haven't found a face in these images: %s"%(cantFindFaceImgs))
+    print('Running time using OpenCV is: %s Seconds'%(end_time-start_time))
+```
+
+</details>
+
+<details>
+
+<summary>代码二带注释最简版</summary>
+
+```py
+# use face-recognition to detect face from images & save them
+
+from PIL import Image
+import face_recognition
+import os
+import time
+
+resize_x = 256
+resize_y = 256
+cantFindFaceImgs = []
+
+# Detect face rects
+def detect(img, new_path, list):
+    image = face_recognition.load_image_file(img)
+    face_locations = face_recognition.face_locations(image)
+    if len(face_locations) == 0:
+        print("I haven't found a face in %s"%(list))
+        cantFindFaceImgs.append(list)
+        return []
+    for i,face_location in enumerate(face_locations):
+
+        # Get the location of each face in this image
+        top, right, bottom, left = face_location
+        face_image = image[top:bottom, left:right]
+        pil_image = Image.fromarray(face_image)
+        resized_face = pil_image.resize((resize_x, resize_y))
+        (filename, extension) = os.path.splitext(list)
+        resized_face.save(new_path+'/FR_'+filename+'_'+str(i)+extension)
+
+if __name__ == '__main__':
+    start_time =time.clock()
+    original_path = 'D:/Celeba/devel'
+    new_path = 'D:/Celeba_face/devel'
+    # os.listdir show all the filename(including extension)
+    imglist = os.listdir(original_path) 
+
+    for list in imglist:
+        img = original_path+'/'+list
+        detect(img, new_path, list)
+
+    end_time = time.clock()
+    print("I haven't found a face in these images: %s"%(cantFindFaceImgs))
+    print('Running time using Face-recognition is: %s Seconds'%(end_time-start_time))
+```
+
+</details>
+
+输出如下：
+
+```bash
+> python findfaceCV.py
+Running time using OpenCV is: 6.6083549 Seconds
+> python findfaceFR.py
+Running time using Face-recognition is: 9.850284 Seconds
+```
+
+识别截图如下：
+
+![findFaceScreenshots](./screenshots/findFaceScreenshots.png)
+
+由此可见： `OpenCV` 识别率低一点，时间快，脸小，矩形框范围大点儿；`Face-recognition` 识别率高一点，时间慢一点，脸大，矩形框范围小点儿。综上，我采用第二种方法 `Face-recognition` 识别。
+
+识别数据库 Celeba devel ， Celeba test ， PGGA ， DFD 输出如下：
+
+```bash
+# Celeba devel
+I have save these images' name that I haven't found a face from in this txt: D:/Celeba_face/devel/nofoundDevel.txt
+I have save these face images in this path: D:/Celeba_face/devel
+Running time using Face-recognition is: 5:09:40.564417
+# Celeba test
+
+# PGGA
+
+# DFD
+
+```
 
 ## 六、提取特征并检测GAN真假脸差异
 
