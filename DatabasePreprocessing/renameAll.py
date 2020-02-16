@@ -2,7 +2,7 @@ import os
 import time
 import datetime
 
-start_time =time.clock()
+start_time = time.clock()
 
 file_path = 'D:/test'
 file_lists = os.listdir(file_path)

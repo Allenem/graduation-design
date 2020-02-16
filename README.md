@@ -35,7 +35,7 @@
 JYT | FFHQ(0-35000) | styleGAN2 | TIMIT
 XJ | Celeba(train) | styleGAN | DFDC
 ZS | FFHQ(35001-70000) | starGAN | faceforensic
-Allenem | Celeba(validation,test) | PGGA | DeepfakeDetection
+Allenem | Celeba(validation,test) | PGGAN | DeepfakeDetection
 
 ### 2.特征分配
 
@@ -480,20 +480,29 @@ Running time using Face-recognition is: 9.850284 Seconds
 
 由此可见： `OpenCV` 识别率低一点，时间快，脸小，矩形框范围大点儿；`Face-recognition` 识别率高一点，时间慢一点，脸大，矩形框范围小点儿。综上，我采用第二种方法 `Face-recognition` 识别。
 
-识别数据库 Celeba devel ， Celeba test ， PGGA ， DFD 输出如下：
+识别数据库 Celeba devel ， Celeba test ， PGGAN ， DFD 
+
+<details open>
+
+<summary>输出如下：</summary>
 
 ```bash
 # Celeba devel
-I have save these images' name that I haven't found a face from in this txt: D:/Celeba_face/devel/nofoundDevel.txt
-I have save these face images in this path: D:/Celeba_face/devel
+I have save these images' name that I haven't found a face from in this txt: D:/Celeba_face/devel/nofound.txt
+I have save face images in this path: D:/Celeba_face/devel
+Not recognition rate: 0.0382536587773637
 Running time using Face-recognition is: 5:09:40.564417
 # Celeba test
-
-# PGGA
+I have save these images' name that I haven't found a face from in this txt: D:/Celeba_face/test/nofound.txt
+I have save face images in this path: D:/Celeba_face/test
+Not recognition rate: 0.0397808597798727
+Running time using Face-recognition is: 1:35:20.080798
+# PGGAN
 
 # DFD
 
 ```
+</details>
 
 ## 六、提取特征并检测GAN真假脸差异
 

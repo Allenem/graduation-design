@@ -56,9 +56,9 @@ def detect(img, new_path, list):
     resized_face.save(new_path+'/FR_'+filename+extension)
 
 if __name__ == '__main__':
-    start_time =time.clock()
-    original_path = 'D:/Celeba/test'
-    new_path = 'D:/Celeba_face/test'
+    start_time = time.clock()
+    original_path = 'D:/test'
+    new_path = 'D:/test_face'
     # os.listdir show all the filename(including extension)
     imglist = os.listdir(original_path) 
     len_imglist = len(imglist)
@@ -70,9 +70,10 @@ if __name__ == '__main__':
     # print can't find face images list: cantFindFaceImgs
     # print("cantFindFaceImgs: %s"%(cantFindFaceImgs))
     len_cantFindFaceImgs = len(cantFindFaceImgs)
+    error_rate = len_cantFindFaceImgs/len_imglist
     print("I have save these images' name that I haven't found a face from in this txt: %s"%(new_path+'/nofound.txt'))
     print("I have save face images in this path: %s"%(new_path))
-    print("Face-recognition accuracy: %f %"%(len_cantFindFaceImgs/len_imglist))
+    print("Not recognition rate: {}".format(error_rate))
     end_time = time.clock()
     # get delta time like this 00:00:05.999678
     delta_time = datetime.timedelta(seconds = (end_time-start_time))
