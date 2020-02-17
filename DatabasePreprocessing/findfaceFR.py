@@ -1,4 +1,4 @@
-# use face-recognition to detect face from images & save them
+# use face-recognition to detect face from one fold's images & save them
 
 import os
 import time
@@ -11,20 +11,20 @@ resize_y = 256
 cantFindFaceImgs = []
 
 # Detect face rects
-def detect(img, new_path, list):
+def detect(img, new_path, imglist):
     txt_path = new_path+'/nofound.txt'
     image = face_recognition.load_image_file(img)
     face_locations = face_recognition.face_locations(image)
     if len(face_locations) == 0:
         # print imgs computer can't find face
         '''
-        print("I haven't found a face in %s"%(list)) 
+        print("I haven't found a face in %s"%(imglist)) 
         '''
-        # add can't find face images list to cantFindFaceImgs
-        cantFindFaceImgs.append(list)
-        # add list to txt tail
+        # add can't find face images imglist to cantFindFaceImgs
+        cantFindFaceImgs.append(imglist)
+        # add imglist to txt tail
         with open(txt_path, "a", encoding="utf-8") as fi:
-            fi.write(list+'\n')
+            fi.write(imglist+'\n')
         # print txt content line by line once a loop
         '''
         with open(txt_path, encoding="utf-8") as fi:
@@ -42,7 +42,7 @@ def detect(img, new_path, list):
         face_image = image[top:bottom, left:right]
         pil_image = Image.fromarray(face_image)
         resized_face = pil_image.resize((resize_x, resize_y))
-        (filename, extension) = os.path.splitext(list)
+        (filename, extension) = os.path.splitext(imglist)
         resized_face.save(new_path+'/FR_'+filename+'_'+str(i)+extension)
     '''
 
@@ -52,7 +52,7 @@ def detect(img, new_path, list):
     face_image = image[top:bottom, left:right]
     pil_image = Image.fromarray(face_image)
     resized_face = pil_image.resize((resize_x, resize_y))
-    (filename, extension) = os.path.splitext(list)
+    (filename, extension) = os.path.splitext(imglist)
     resized_face.save(new_path+'/FR_'+filename+extension)
 
 if __name__ == '__main__':
@@ -60,14 +60,14 @@ if __name__ == '__main__':
     original_path = 'D:/test'
     new_path = 'D:/test_face'
     # os.listdir show all the filename(including extension)
-    imglist = os.listdir(original_path) 
-    len_imglist = len(imglist)
+    imglists = os.listdir(original_path) 
+    len_imglist = len(imglists)
 
-    for list in imglist:
-        img = original_path+'/'+list
-        detect(img, new_path, list)
+    for imglist in imglists:
+        img = original_path+'/'+imglist
+        detect(img, new_path, imglist)
 
-    # print can't find face images list: cantFindFaceImgs
+    # print can't find face images imglist: cantFindFaceImgs
     # print("cantFindFaceImgs: %s"%(cantFindFaceImgs))
     len_cantFindFaceImgs = len(cantFindFaceImgs)
     error_rate = len_cantFindFaceImgs/len_imglist

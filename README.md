@@ -2,29 +2,35 @@
 
 ## 目录
 
-- [仓库说明](#一仓库说明)
-- [工作计划](#二工作计划)
-- [调研和资料分析](#三调研和资料分析)
-- [学习特征提取](#四学习特征提取)
-- [数据库预处理](#五数据库预处理)
-- [提取特征并检测GAN真假脸差异](#六提取特征并检测GAN真假脸差异)
-- [Deepfake换脸检测算法实现](#七Deepfake换脸检测算法实现)
-- [完成论文](#八完成论文)
+- [x] [仓库说明](#一仓库说明)
+- [x] [工作计划](#二工作计划)
+- [x] [调研和资料分析](#三调研和资料分析)
+- [x] [学习特征提取](#四学习特征提取)
+- [ ] [数据库预处理](#五数据库预处理)
+- [ ] [Celeba真脸数据集提取特征](#六Celeba真脸数据集提取特征)
+- [ ] [PGGAN假脸数据集提取特征](#七PGGAN假脸数据集提取特征)
+- [ ] [DFD假脸数据集提取特征](#八DFD假脸数据集提取特征)
+- [ ] [完成论文](#九完成论文)
+
+---
 
 ## 一、仓库说明
 
 ```bash
 .
 │  LICENSE                # 许可说明
-│  README.md              # 说明文件
+│  README.md              # 简介
 │
 ├─Preparation             # 阅读相关论文，Python学习，环境准备工作
 ├─FeatureExtraction       # 学习特征提取 代码文件夹
-├─DatabasePreprocessing   # 数据库预处理，提取人脸  代码文件夹
-├─DetectGANDifferences    # 提取特征并检测GAN真假脸差异  代码文件夹
-├─DeepfakeDetection       # 算法实现 Deepfake 换脸检测  代码文件夹
+├─DatabasePreprocessing   # 数据库预处理：图片则直接提取人脸，视频则先分帧存图再提取人脸
+├─ExtractCelebaFeature    # 提取 Celeba 数据集人脸特征  代码文件夹
+├─ExtractPGGANFeature     # 提取 PGGAN 数据集人脸特征  代码文件夹
+├─ExtractDFDFeature       # 提取 DFD 数据集人脸特征  代码文件夹
 └─Paper                   # 我的论文
 ```
+
+---
 
 ## 二、工作计划
 
@@ -35,7 +41,7 @@
 JYT | FFHQ(0-35000) | styleGAN2 | TIMIT
 XJ | Celeba(train) | styleGAN | DFDC
 ZS | FFHQ(35001-70000) | starGAN | faceforensic
-Allenem | Celeba(validation,test) | PGGAN | DeepfakeDetection
+PY | Celeba(validation,test) | PGGAN | DeepfakeDetection
 
 ### 2.特征分配
 
@@ -44,7 +50,7 @@ Allenem | Celeba(validation,test) | PGGAN | DeepfakeDetection
 JYT | 1、局部二值模式LBP 2、方向梯度直方图HOG 3、SRM残差图像
 XJ | 1、共生矩阵 2、光流场 3、LPQ特征
 ZS | 1、直方图/共生矩阵 2、拉普拉斯变换均方差 3、小波变换频率直方图
-Allenem | 1、颜色直方图 2、Surf 3、错误级别分析（Error level analysis，ELA）
+PY | 1、颜色直方图 2、Surf 3、错误级别分析（Error level analysis，ELA）
 
 ### 3.工作计划
 
@@ -55,6 +61,8 @@ Allenem | 1、颜色直方图 2、Surf 3、错误级别分析（Error level anal
 2020.02-2020.03 | 提取人脸特征、检测GAN真假脸图像差异 | 隐写分析特征或者图像篡改特征
 2020.03-2020.04 | Deepfake换脸视频检测算法实现 | SVM分类器等不同分类器
 2020.04-2020.05 | 完成毕业论文 |
+
+---
 
 ## 三、调研和资料分析
 
@@ -70,28 +78,30 @@ Allenem | 1、颜色直方图 2、Surf 3、错误级别分析（Error level anal
 
 [[5] Perceptual Judgments to Detect ComputerGenerated Forged Faces in Social Media](https://kopernio.com/viewer?doi=10.1007/978-3-030-20984-1_4&token=WzE3MDUwMzYsIjEwLjEwMDcvOTc4LTMtMDMwLTIwOTg0LTFfNCJd.EPCnRwtIa113H6qoV-aTHHQoOOs)
 
-参考文件夹 `Preparation`
+详见文件夹： [./Preparation](./Preparation)
 
 ### 2.我自己的中文翻译
 
-参考文件夹 `Preparation`
+详见文件夹： [./Preparation](./Preparation)
 
 ### 3.Python学习和人脸检测学习
 
-学习笔记： https://github.com/Allenem/GitHubNoteBook#python
+我的 Python 学习笔记： https://github.com/Allenem/GitHubNoteBook#python
 
 OpenCV，dlib，face_recognition 实现人脸检测，标志检测等实验小测试： https://github.com/Allenem/PyTest
 
+---
+
 ## 四、学习特征提取
+
+### 1、颜色直方图 
 
 >学习参考：   
 >https://blog.csdn.net/wsp_1138886114/article/details/80660014   
 >https://www.jianshu.com/p/38da7d6cb89d   
 >https://blog.csdn.net/u010454030/article/details/80312809   
 >https://blog.csdn.net/qq_43443531/article/details/93043212   
->https://www.jianshu.com/p/bd12c4273d7d
-
-### 1、颜色直方图 
+>https://www.jianshu.com/p/bd12c4273d7d   
 
 #### 1.1 matplotlib画图像变色问题
 
@@ -222,8 +232,9 @@ cv2.destroyAllWindows()
     只绘制特征点的坐标点,显示在图像上就是一个个小圆点,每个小圆点的圆心坐标都是特征点的坐标。
 
   - cv2.DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINT：
+    
+    单点的特征点不被绘制 
 
-    单点的特征点不被绘制 
 
 **③ 调试**
 
@@ -245,7 +256,7 @@ pip install opencv-contrib-python==3.4.2.16 -i "https://pypi.doubanio.com/simple
 
 **④ 代码文件** 
 
-`./FeatureExtraction/surf.py`
+[./FeatureExtraction/surf.py](./FeatureExtraction/surf.py)
 
 **⑤ 效果图**
 
@@ -263,7 +274,7 @@ pip install opencv-contrib-python==3.4.2.16 -i "https://pypi.doubanio.com/simple
 
 **① 理论说明**
 
-ELA 全称：Error Level Analysis ，汉译为“错误级别分析”或者叫“误差分析”。通过检测特定压缩比率重新绘制图片后造成的误差分布，可用于识别JPEG图片的压缩。
+`ELA` 全称：`Error Level Analysis` ，汉译为“错误级别分析”或者叫“误差分析”。通过检测特定压缩比率重新绘制图片后造成的误差分布，可用于识别JPEG图片的压缩。
 
 >Principe：Error Level Analysis (ELA) permits identifying areas within an image that are at different compression levels. With JPEG images, the entire picture should be at roughly the same level. If a section of the image is at a significantly different error level, then it likely indicates a digital modification.
 
@@ -271,13 +282,15 @@ ELA 全称：Error Level Analysis ，汉译为“错误级别分析”或者叫�
 
 **② 编程**
 
-为了引入magic文件类型识别，安装 `python-magic-bin` 库。
+为了引入 `magic` 文件类型识别，安装 `python-magic-bin` 库。
 
 ```bash
 pip install -i http://mirrors.aliyun.com/pypi/simple/ python-magic-bin
 ```
 
-代码文件：`./FeatureExtraction/img/ELA.py`
+代码文件：
+
+[./FeatureExtraction/img/ELA.py](./FeatureExtraction/img/ELA.py)
 
 <details>
 <summary>带注释的代码</summary>
@@ -354,11 +367,15 @@ if __name__ == "__main__":
 -|-|-
 ![books.jpg](./FeatureExtraction/img/books.jpg) | ![books-edited.jpg](./FeatureExtraction/img/books-edited.jpg) | ![booksANDbooks-edited_diff.jpg](./FeatureExtraction/img/booksANDbooks-edited_diff.jpg) 
 
+---
+
 ## 五、数据库预处理
+
+### 1.提取人脸
 
 采用 OpenCV 和 face_recognition 做对比，用15张图片做实验
 
-完善后的代码如 `./DatabasePreprocessing/findfaceCV.py` 和 `./DatabasePreprocessing/findfaceFR.py` 所示。
+完善后的代码如 [./DatabasePreprocessing/findfaceCV.py](./DatabasePreprocessing/findfaceCV.py) 和 [./DatabasePreprocessing/findfaceFR.py](./DatabasePreprocessing/findfaceFR.py) 所示。
 
 <details>
 <summary>代码一带注释最简版</summary>
@@ -482,7 +499,7 @@ Running time using Face-recognition is: 9.850284 Seconds
 
 识别数据库 Celeba devel ， Celeba test ， PGGAN ， DFD 
 
-<details open>
+<details>
 
 <summary>输出如下：</summary>
 
@@ -492,26 +509,149 @@ I have save these images' name that I haven't found a face from in this txt: D:/
 I have save face images in this path: D:/Celeba_face/devel
 Not recognition rate: 0.0382536587773637
 Running time using Face-recognition is: 5:09:40.564417
+
 # Celeba test
 I have save these images' name that I haven't found a face from in this txt: D:/Celeba_face/test/nofound.txt
 I have save face images in this path: D:/Celeba_face/test
 Not recognition rate: 0.0397808597798727
 Running time using Face-recognition is: 1:35:20.080798
-# PGGAN
 
-# DFD
+# PGGAN 人脸较清晰，没有预处理
+
+# DFD 先进行视频分帧保存图片处理，再进人脸识别步骤
 
 ```
+
 </details>
 
-## 六、提取特征并检测GAN真假脸差异
+### 2.视频分帧保存图片处理
+
+> 代码参考：   
+> https://blog.csdn.net/qq_42992919/article/details/98608379   
+> https://blog.csdn.net/qq_39938666/article/details/87971839
+
+<details>
+<summary>代码</summary>
+
+```py
+import os
+import cv2
+import time
+import datetime
+
+def framing():
+    input_path = 'D:/test'
+    output_path = 'D:/test_face'
+    txt_path = output_path+'/log.txt'
+    with open(txt_path, "a", encoding="utf-8") as fi:
+        fi.write('\n AllVideosFullName \t Index \t Frame \t Picture\n')
+
+    videos = os.listdir(input_path)
+    videos.sort(key = lambda x: x[:-4])
+
+    if len(videos) != 0:
+        video_num = 0
+        for each_video in videos:
+            print('Video {} is running ...'.format(video_num))
+            each_video_input = input_path+'/'+str(each_video)
+            each_video_output_path = output_path+'/'+str(each_video[:-4])
+            if not os.path.exists(each_video_output_path):
+                os.mkdir(each_video_output_path)
+            
+            capture = cv2.VideoCapture(each_video_input)
+            if capture.isOpened():
+                real = True
+            else:
+                real = False
+
+            frame_step = 10
+            frame_num = 0
+            picture_num = 0
+
+            while real:
+                real, frame = capture.read()
+                if(frame_num % frame_step == 0):
+                    cv2.imwrite(each_video_output_path+'/Frame'+str(frame_num)+'_Pic'+str(picture_num)+'.jpg',frame)
+                    picture_num += 1
+                frame_num += 1
+                cv2.waitKey(1)
+
+            video_num += 1
+            with open(txt_path, "a", encoding="utf-8") as fi:
+                fi.write('{} \t {} \t {} \t {}\n'.format(each_video[:-4], video_num, frame_num, picture_num ))
+            capture.release()
+
+        print('Running log has been saved here: '+txt_path)
+
+    else:
+        print('Empty Directory')
+
+
+if __name__ == '__main__':
+    start_time = time.clock()
+    framing()
+    end_time = time.clock()
+    delta_time = datetime.timedelta(seconds = (end_time-start_time))
+    print('Running time is: %s '%(delta_time))
+```
+
+</details>
+
+测试成果：
+
+1. 截图
+
+![framing](screenshots/framing.png)
+
+2. Terminal
+
+```bash
+Video 0 is running ...
+Video 1 is running ...
+Video 2 is running ...
+Running log has been saved here: D:/test_face/log.txt
+Running time is: 0:00:20.817361
+```
+
+3. log.txt
+
+```txt
+ AllVideosFullName 	   Index   Frame   Picture
+01__exit_phone_room    1       306     31
+01__hugging_happy      2       788     79
+01__kitchen_pan        3       561     57
+```
+
+### 3.提取DFD视频分帧后的图片中的人脸
+
+完善后的代码如 [./DatabasePreprocessing/findfaceFR_folder.py](./DatabasePreprocessing/findfaceFR_folder.py) 所示。
+
+运行代码后，识别的人脸按原先的文件夹存放在新路径下的同名文件夹，每个文件夹都有 log.txt 记录未识别出人脸的文件以及本文件夹人脸未识别率。在新路径下有总的统计数据 log.txt ，包含： 有损图片总数， 未识别图片总数， 未受损图片总数， 总的未识别率。
+
+---
+
+## 六、Celeba真脸数据集提取特征
 
 
 
-## 七、Deepfake换脸检测算法实现
+---
+
+## 七、PGGAN假脸数据集提取特征
 
 
 
-## 八、完成论文
+---
+
+## 八、DFD假脸数据集提取特征
 
 
+
+---
+
+## 九、完成论文
+
+
+
+---
+
+完
