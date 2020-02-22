@@ -58,7 +58,10 @@ if __name__ == '__main__':
     delta_time = datetime.timedelta(seconds = (end_time-start_time))
     print('Running time is: %s '%(delta_time))
 
-
+# OUTPUT1(frame images from DFD/original_c23)
 # Running log has been saved here: G:/DFD_img/original_c23/log.txt
 # Running time is: 1:05:49.907241
 
+# OUTPUT2(frame images from DFD/attack_c23)
+# Running log has been saved here: G:/DFD_img/attack_c23/log.txt
+# Running time is: 6:29:04.835291

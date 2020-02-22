@@ -628,6 +628,38 @@ Running time is: 0:00:20.817361
 
 运行代码后，识别的人脸按原先的文件夹存放在新路径下的同名文件夹，每个文件夹都有 log.txt 记录未识别出人脸的文件以及本文件夹人脸未识别率。在新路径下有总的统计数据 log.txt ，包含： 有损图片总数， 未识别图片总数， 未受损图片总数， 总的未识别率。
 
+- 分帧结果
+
+```bash
+# OUTPUT1(frame images from DFD/original_c23)
+# Running log has been saved here: G:/DFD_img/original_c23/log.txt
+# Running time is: 1:05:49.907241
+
+# OUTPUT2(frame images from DFD/attack_c23)
+# Running log has been saved here: G:/DFD_img/attack_c23/log.txt
+# Running time is: 6:29:04.835291
+```
+
+- 找脸结果
+
+```bash
+# OUTPUT1(find face from DFD_img/original_c23)
+# # of folders: 363
+# Running time using Face-recognition is: 13:46:29.115011
+
+# OUTPUT2(find face from DFD_img/attack_c23)
+# # of folders: 3068
+# Running time using Face-recognition is: 4 days, 4:05:53.688934
+```
+
+原视频人脸识别率：95.4%
+
+![log](./screenshots/DFDoriginal_log.png)
+
+生成视频人脸识别率：97.7%
+
+![log](./screenshots/DFDattack_log.png)
+
 ---
 
 ## 六、Celeba真脸数据集提取特征

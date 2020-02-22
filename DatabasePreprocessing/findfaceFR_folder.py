@@ -48,8 +48,8 @@ def detect(img, new_path, imglist):
 if __name__ == '__main__':
     
     start_time = time.clock()
-    original_path = 'G:/DFD_img/original_c23'
-    new_path = 'G:/DFD_face/original_c23'
+    original_path = 'G:/DFD_img/attack_c23'
+    new_path = 'G:/DFD_face/attack_c23'
     log_path = new_path+'/log.txt'
     
     all_file_lists = os.listdir(original_path)
@@ -106,4 +106,11 @@ if __name__ == '__main__':
     end_time = time.clock()
     delta_time = datetime.timedelta(seconds = (end_time-start_time))
     print('Running time using Face-recognition is: %s '%(delta_time))
-    
+
+# OUTPUT1(find face from DFD_img/original_c23)
+# # of folders: 363
+# Running time using Face-recognition is: 13:46:29.115011
+
+# OUTPUT2(find face from DFD_img/attack_c23)
+# # of folders: 3068
+# Running time using Face-recognition is: 4 days, 4:05:53.688934
