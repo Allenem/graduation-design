@@ -6,11 +6,9 @@
 - [x] [工作计划](#二工作计划)
 - [x] [调研和资料分析](#三调研和资料分析)
 - [x] [学习特征提取](#四学习特征提取)
-- [ ] [数据库预处理](#五数据库预处理)
-- [ ] [Celeba真脸数据集提取特征](#六Celeba真脸数据集提取特征)
-- [ ] [PGGAN假脸数据集提取特征](#七PGGAN假脸数据集提取特征)
-- [ ] [DFD假脸数据集提取特征](#八DFD假脸数据集提取特征)
-- [ ] [完成论文](#九完成论文)
+- [x] [数据库预处理](#五数据库预处理)
+- [ ] [Celeba PGGAN DFD 数据集特征提取](#六CelebaPGGANDFD数据集特征提取)
+- [ ] [完成论文](#七完成论文)
 
 ---
 
@@ -18,16 +16,14 @@
 
 ```bash
 .
-│  LICENSE                # 许可说明
-│  README.md              # 简介
+│  LICENSE                       # 许可说明
+│  README.md                     # 简介
 │
-├─Preparation             # 阅读相关论文，Python学习，环境准备工作
-├─FeatureExtraction       # 学习特征提取 代码文件夹
-├─DatabasePreprocessing   # 数据库预处理：图片则直接提取人脸，视频则先分帧存图再提取人脸
-├─ExtractCelebaFeature    # 提取 Celeba 数据集人脸特征  代码文件夹
-├─ExtractPGGANFeature     # 提取 PGGAN 数据集人脸特征  代码文件夹
-├─ExtractDFDFeature       # 提取 DFD 数据集人脸特征  代码文件夹
-└─Paper                   # 我的论文
+├─Preparation                    # 阅读相关论文，Python学习，环境准备工作
+├─FeatureExtractionLearning      # 学习特征提取 代码文件夹
+├─DatabasePreprocessing          # 数据库预处理：图片提取人脸，视频分帧存图提取人脸
+├─DatabaseFeatureExtraction      # 提取 Celeba PGGAN DFD 数据集人脸特征  代码文件夹
+└─Paper                          # 我的论文
 ```
 
 ---
@@ -351,21 +347,21 @@ if __name__ == "__main__":
 
 原图 | ELA高亮图
 -|-
-![butterfly.jpg](./FeatureExtraction/img/butterfly.jpg) | ![butterfly_ela.jpg](./FeatureExtraction/img/butterfly_ela.jpg)
-![faketest.jpg](./FeatureExtraction/img/faketest.jpg) | ![faketest_ela.jpg](./FeatureExtraction/img/faketest_ela.jpg)
+![butterfly.jpg](./FeatureExtractionLearning/img/butterfly.jpg) | ![butterfly_ela.jpg](./FeatureExtractionLearning/img/butterfly_ela.jpg)
+![faketest.jpg](./FeatureExtractionLearning/img/faketest.jpg) | ![faketest_ela.jpg](./FeatureExtractionLearning/img/faketest_ela.jpg)
 
 第二组
 
 原图 | 网上的ELA高亮图 | 我自己做的ELA高亮图
 -|-|-
-![webOriginalImg.jpg](./FeatureExtraction/img/webOriginalImg.jpg) | ![webOriginalImg-ela.jpg](./FeatureExtraction/img/webOriginalImg-ela.jpg) | ![webOriginalImg_ela.jpg](./FeatureExtraction/img/webOriginalImg_ela.jpg)
-![dancersmiling.jpg](./FeatureExtraction/img/dancersmiling.jpg) | ![dancersmiling-ela.png](./FeatureExtraction/img/dancersmiling-ela.png) | ![dancersmiling_ela.jpg](./FeatureExtraction/img/dancersmiling_ela.jpg)
+![webOriginalImg.jpg](./FeatureExtractionLearning/img/webOriginalImg.jpg) | ![webOriginalImg-ela.jpg](./FeatureExtractionLearning/img/webOriginalImg-ela.jpg) | ![webOriginalImg_ela.jpg](./FeatureExtractionLearning/img/webOriginalImg_ela.jpg)
+![dancersmiling.jpg](./FeatureExtractionLearning/img/dancersmiling.jpg) | ![dancersmiling-ela.png](./FeatureExtractionLearning/img/dancersmiling-ela.png) | ![dancersmiling_ela.jpg](./FeatureExtractionLearning/img/dancersmiling_ela.jpg)
 
 第三组
 
 图1 | 图2 | 差别
 -|-|-
-![books.jpg](./FeatureExtraction/img/books.jpg) | ![books-edited.jpg](./FeatureExtraction/img/books-edited.jpg) | ![booksANDbooks-edited_diff.jpg](./FeatureExtraction/img/booksANDbooks-edited_diff.jpg) 
+![books.jpg](./FeatureExtractionLearning/img/books.jpg) | ![books-edited.jpg](./FeatureExtractionLearning/img/books-edited.jpg) | ![booksANDbooks-edited_diff.jpg](./FeatureExtractionLearning/img/booksANDbooks-edited_diff.jpg) 
 
 ---
 
@@ -516,7 +512,7 @@ I have save face images in this path: D:/Celeba_face/test
 Not recognition rate: 0.0397808597798727
 Running time using Face-recognition is: 1:35:20.080798
 
-# PGGAN 人脸较清晰，没有预处理
+# PGGAN 人脸较清晰，没有进行人脸识别预处理，但是为了ELA，进行了resize和png转jpg处理
 
 # DFD 先进行视频分帧保存图片处理，再进人脸识别步骤
 
@@ -660,27 +656,123 @@ Running time is: 0:00:20.817361
 
 ![log](./screenshots/DFDattack_log.png)
 
+
+### 4.PGGAN resize PNG->JPG
+
+代码详见：[./DatabasePreprocessing/pngToJpg.py](./DatabasePreprocessing/pngToJpg.py)
+
+<details>
+<summary>输出如下</summary>
+
+```bash
+# of file in G:/PGGAN/devel is : 6000
+# of file in G:/PGGAN/test is : 3000
+# of file in G:/PGGAN/train is : 21000
+# of file in G:/PGGAN/img_pggan/zip000000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip001000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip002000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip003000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip004000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip007000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip008000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip012000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip013000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip014000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip016000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip017000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip018000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip019000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip025000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip026000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip028000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip087000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip088000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip089000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip090000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip091000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip092000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip093000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip094000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip095000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip096000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip097000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip098000 is : 1000
+# of file in G:/PGGAN/img_pggan/zip099000 is : 1000
+Running time is: 0:48:38.366194
+```
+
+</details>
+
+<details>
+<summary>日志如下</summary>
+
+```txt
+
+G:/PGGAN/devel fileslen: 6000 pngcount: 6000 notpng: 0 damaged: 0
+G:/PGGAN/test fileslen: 3000 pngcount: 3000 notpng: 0 damaged: 0
+G:/PGGAN/train fileslen: 21000 pngcount: 21000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip000000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip001000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip002000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip003000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip004000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip007000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip008000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip012000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip013000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip014000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip016000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip017000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip018000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip019000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip025000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip026000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip028000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip087000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip088000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip089000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip090000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip091000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip092000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip093000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip094000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip095000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip096000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip097000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip098000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+G:/PGGAN/img_pggan/zip099000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
+```
+
+</details>
+
 ---
 
-## 六、Celeba真脸数据集提取特征
+## 六、Celeba&PGGAN&DFD数据集特征提取
 
+matplotlib中cla() clf() close()用途
+```py
+import matplotlib.pyplot as plt
 
+plt.cla()   # Clear axis即清除当前图形中的当前活动轴。其他轴不受影响。
+plt.clf()   # Clear figure清除所有轴，但是窗口打开，这样它可以被重复使用。
+plt.close() # Close a figure window
+```
+
+![对比图](./screenshots/prepare.jpg)
+
+左上：原图，第一排PGGAN假脸，第二排Celeba真脸
+
+右上：三原色直方图，假脸三原色峰值基本重合，真脸三原色峰值错开
+
+左下：SURF特征点，假脸同样的阈值特征点多，真脸少
+
+右下：ELA，假脸ELA图片发亮处较多，真脸基本一片黑
+
+今天只是简单测试，明天完善一下，把三个数据集的3种特征都提取一下。 :v: :V:
 
 ---
 
-## 七、PGGAN假脸数据集提取特征
-
-
-
----
-
-## 八、DFD假脸数据集提取特征
-
-
-
----
-
-## 九、完成论文
+## 七、完成论文
 
 
 
