@@ -7,7 +7,7 @@
 - [x] [调研和资料分析](#三调研和资料分析)
 - [x] [学习特征提取](#四学习特征提取)
 - [x] [数据库预处理](#五数据库预处理)
-- [ ] [Celeba PGGAN DFD 数据集特征提取](#六CelebaPGGANDFD数据集特征提取)
+- [x] [Celeba PGGAN DFD 数据集特征提取](#六CelebaPGGANDFD数据集特征提取)
 - [ ] [完成论文](#七完成论文)
 
 ---
@@ -749,6 +749,8 @@ G:/PGGAN/img_pggan/zip099000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
 
 ## 六、Celeba&PGGAN&DFD数据集特征提取
 
+代码详见：[./DatabaseFeatureExtraction/extract_feature.py](./DatabaseFeatureExtraction/extract_feature.py)
+
 matplotlib中cla() clf() close()用途
 ```py
 import matplotlib.pyplot as plt
@@ -758,6 +760,8 @@ plt.clf()   # Clear figure清除所有轴，但是窗口打开，这样它可以
 plt.close() # Close a figure window
 ```
 
+下图只是一部分 `Celeba` 和 `PGGAN` 数据集的对比图
+
 ![对比图](./screenshots/prepare.jpg)
 
 左上：原图，第一排PGGAN假脸，第二排Celeba真脸
@@ -766,15 +770,34 @@ plt.close() # Close a figure window
 
 左下：SURF特征点，假脸同样的阈值特征点多，真脸少
 
-右下：ELA，假脸ELA图片发亮处较多，真脸基本一片黑
+右下：ELA，假脸ELA图片发亮处较多，真脸基本一色调一致
 
-今天只是简单测试，明天完善一下，把三个数据集的3种特征都提取一下。 :v: :V:
+今天把三个数据集处理（提取人脸，png转jpg）后的图片进行了抽样，然后把抽样图片的3种特征都提取了一下。 :v:
+
+输出如下：
+
+```bash
+# # Celeba 
+startTime: 2020-02-24 14:16:13.824223
+endTime: 2020-02-24 14:16:46.069675
+Running time: 0:00:32.245452
+
+# # PGGAN 
+startTime: 2020-02-24 14:20:15.186285
+endTime: 2020-02-24 14:21:47.677183
+Running time: 0:01:32.490898
+
+# # DFD
+startTime: 2020-02-24 14:22:45.027296
+endTime: 2020-02-24 14:59:50.830777
+Running time: 0:37:05.803481
+```
 
 ---
 
 ## 七、完成论文
 
-
+详见：[./Paper](./Paper) 文件夹 (未完待续。。。)
 
 ---
 
