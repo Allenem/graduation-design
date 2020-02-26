@@ -8,7 +8,8 @@
 - [x] [学习特征提取](#四学习特征提取)
 - [x] [数据库预处理](#五数据库预处理)
 - [x] [Celeba PGGAN DFD 数据集特征提取](#六CelebaPGGANDFD数据集特征提取)
-- [ ] [完成论文](#七完成论文)
+- [ ] [SVM 分类器分类](#七SVM分类器分类)
+- [ ] [完成论文](#八完成论文)
 
 ---
 
@@ -23,6 +24,7 @@
 ├─FeatureExtractionLearning      # 学习特征提取 代码文件夹
 ├─DatabasePreprocessing          # 数据库预处理：图片提取人脸，视频分帧存图提取人脸
 ├─DatabaseFeatureExtraction      # 提取 Celeba PGGAN DFD 数据集人脸特征  代码文件夹
+├─SVM                            # SVM分类器分类
 └─Paper                          # 我的论文
 ```
 
@@ -772,33 +774,41 @@ plt.close() # Close a figure window
 
 右下：ELA，假脸ELA图片发亮处较多，真脸基本一色调一致
 
-今天把三个数据集处理（提取人脸，png转jpg）后的图片进行了抽样，然后把抽样图片的3种特征都提取了一下。 :v:
+今天把三个数据集处理（提取人脸，png转jpg）后的所有图片的3种特征都提取了一下。 :v:
+
+Celeba、PGGAN 特征较好，DFD 效果一般。
 
 输出如下：
 
 ```bash
-# # Celeba 
-startTime: 2020-02-24 14:16:13.824223
-endTime: 2020-02-24 14:16:46.069675
-Running time: 0:00:32.245452
+# Celeba 
+startTime: 2020-02-25 18:08:30.578360
+endTime: 2020-02-25 22:50:47.230785
+Running time: 4:42:16.652425
 
-# # PGGAN 
-startTime: 2020-02-24 14:20:15.186285
-endTime: 2020-02-24 14:21:47.677183
-Running time: 0:01:32.490898
+# PGGAN 
+startTime: 2020-02-25 18:09:01.274854
+endTime: 2020-02-25 22:58:56.398361
+Running time: 4:49:55.123507
 
-# # DFD
-startTime: 2020-02-24 14:22:45.027296
-endTime: 2020-02-24 14:59:50.830777
-Running time: 0:37:05.803481
+# DFD
+startTime: 2020-02-25 18:09:41.216839
+endTime: 2020-02-26 12:08:03.989166
+Running time: 17:58:22.772327
 ```
 
 ---
 
-## 七、完成论文
+## 七、SVM分类器分类
 
-详见：[./Paper](./Paper) 文件夹 (未完待续。。。)
+
 
 ---
 
-完
+## 八、完成论文
+
+《开题报告》 《毕业论文》 详见：[./Paper](./Paper) 文件夹 (未完待续。。。)
+
+---
+
+完 [BackToTop](#针对Deepfake假脸视频面部细节特征的提取算法)
