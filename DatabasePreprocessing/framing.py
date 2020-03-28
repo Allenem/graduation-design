@@ -34,11 +34,13 @@ def framing():
 
             while real:
                 real, frame = capture.read()
-                if(frame_num % frame_step == 0):
-                    cv2.imwrite(each_video_output_path+'/Frame'+str(frame_num)+'_Pic'+str(picture_num)+'.jpg',frame)
-                    picture_num += 1
-                frame_num += 1
-                # cv2.waitKey(1)
+                # fix blank img
+                if real:
+                    if(frame_num % frame_step == 0):
+                        cv2.imwrite(each_video_output_path+'/Frame'+str(frame_num)+'_Pic'+str(picture_num)+'.jpg',frame)
+                        picture_num += 1
+                    frame_num += 1
+                    # cv2.waitKey(1)
 
             video_num += 1
             with open(txt_path, "a", encoding="utf-8") as fi:

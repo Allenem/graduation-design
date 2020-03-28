@@ -20,11 +20,12 @@
 │  LICENSE                       # 许可说明
 │  README.md                     # 简介
 │
-├─Preparation                    # 阅读相关论文，Python学习，环境准备工作
+├─References                     # 参考文献
 ├─FeatureExtractionLearning      # 学习特征提取 代码文件夹
 ├─DatabasePreprocessing          # 数据库预处理：图片提取人脸，视频分帧存图提取人脸
 ├─DatabaseFeatureExtraction      # 提取 Celeba PGGAN DFD 数据集人脸特征  代码文件夹
-├─SVM                            # SVM分类器分类
+├─SVM                            # 学习SVM分类器，分类器实现人脸判别  代码文件夹
+├─screenshots                    # 一些截图
 └─Paper                          # 我的论文
 ```
 
@@ -75,6 +76,8 @@ PY | 1、颜色直方图 2、Surf 3、错误级别分析（Error level analysis�
 [[4] Exposing GAN-synthesized Faces Using Landmark Locations](https://arxiv.org/pdf/1904.00167.pdf)
 
 [[5] Perceptual Judgments to Detect ComputerGenerated Forged Faces in Social Media](https://kopernio.com/viewer?doi=10.1007/978-3-030-20984-1_4&token=WzE3MDUwMzYsIjEwLjEwMDcvOTc4LTMtMDMwLTIwOTg0LTFfNCJd.EPCnRwtIa113H6qoV-aTHHQoOOs)
+
+……
 
 详见文件夹： [./Preparation](./Preparation)
 
@@ -801,7 +804,20 @@ Running time: 17:58:22.772327
 
 ## 七、SVM分类器分类
 
+>学习参考：   
+>https://scikit-learn.org/stable/modules/classes.html#module-sklearn.svm   
+>代码参考:   
+>https://blog.csdn.net/weixin_41322458/article/details/94389356   
 
+练手代码
+
+[./SVM/svm_learning.py](./SVM/svm_learning.py)
+
+[./SVM/svm_eg.py](./SVM/svm_eg.py)
+
+截图
+
+![svm_eg.png](./screenshots/svm_eg.png)
 
 ---
 
