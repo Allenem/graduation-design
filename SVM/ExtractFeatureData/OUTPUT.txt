@@ -1,0 +1,122 @@
+PS D:\1puyao\engineer\0github\graduation-design\SVM\ExtractFeatureData> python extract_feature_dataure_data.py
+inputfolders:
+['devel', 'test']
+inputsubfolders:
+['FR_000007.jpg', 'FR_000012.jpg', 'FR_000017.jpg', 'FR_000019.jpg', 'FR_000029.jpg', 'FR_000030.jp00030.jpg', 'FR_000032.jpg', 'FR_000039.jpg', 'FR_000044.jpg', 'FR_000046.jpg']
+inputfiles:
+['FR_000007.jpg', 'FR_000012.jpg', 'FR_000017.jpg', 'FR_000019.jpg', 'FR_000029.jpg', 'FR_000030.jp00030.jpg', 'FR_000032.jpg', 'FR_000039.jpg', 'FR_000044.jpg', 'FR_000046.jpg']                    g', 'FR_000032.jpg', 'FR_000039.jpg', 'FR_000044.jpg', 'FR_000046.jpg']
+Color startTime: 2020-04-22 20:35:56.982715
+Color endTime: 2020-04-22 20:36:54.337983
+Color running time: 0:00:57.355268
+SURF startTime: 2020-04-22 20:36:54.338976
+SURF endTime: 2020-04-22 20:36:55.380298
+SURF running time: 0:00:01.041322
+ELA startTime: 2020-04-22 20:36:55.382261
+ELA endTime: 2020-04-22 20:37:13.145464
+ELA running time: 0:00:17.763203
+inputsubfolders:
+['FR_000013.jpg', 'FR_000016.jpg', 'FR_000018.jpg', 'FR_000037.jpg', 'FR_000042.jpg', 'FR_000054.jpg', 'FR_000074.jpg', 'FR_000079.jpg', 'FR_000114.jpg', 'FR_000121.jpg']
+inputfiles:
+['FR_000013.jpg', 'FR_000016.jpg', 'FR_000018.jpg', 'FR_000037.jpg', 'FR_000042.jpg', 'FR_000054.jpg', 'FR_000074.jpg', 'FR_000079.jpg', 'FR_000114.jpg', 'FR_000121.jpg']
+Color startTime: 2020-04-22 20:37:13.165620
+Color endTime: 2020-04-22 20:38:09.109514
+Color running time: 0:00:55.943894
+SURF startTime: 2020-04-22 20:38:09.116695
+SURF endTime: 2020-04-22 20:38:09.307762
+SURF running time: 0:00:00.191067
+ELA startTime: 2020-04-22 20:38:09.311695
+ELA endTime: 2020-04-22 20:38:26.573952
+ELA running time: 0:00:17.262257
+inputfolders:
+['devel', 'img_pggan', 'test', 'train']
+inputsubfolders:
+['000000.jpg', '000004.jpg', '000005.jpg', '000012.jpg', '000017.jpg', '000018.jpg', '000019.jpg', '000031.jpg', '000045.jpg', '000051.jpg']
+inputfiles:
+['000000.jpg', '000004.jpg', '000005.jpg', '000012.jpg', '000017.jpg', '000018.jpg', '000019.jpg', '000031.jpg', '000045.jpg', '000051.jpg']
+Color startTime: 2020-04-22 20:38:26.598703
+Color endTime: 2020-04-22 20:39:19.637175
+Color running time: 0:00:53.038472
+SURF startTime: 2020-04-22 20:39:19.638143
+SURF endTime: 2020-04-22 20:39:19.840598
+SURF running time: 0:00:00.202455
+ELA startTime: 2020-04-22 20:39:19.841608
+ELA endTime: 2020-04-22 20:39:37.390565
+ELA running time: 0:00:17.548957
+inputsubfolders:
+['zip000000']
+inputfiles:
+['000000.jpg', '000001.jpg', '000002.jpg', '000003.jpg', '000004.jpg', '000005.jpg', '000006.jpg', '000007.jpg', '000008.jpg', '000009.jpg']
+Color startTime: 2020-04-22 20:39:37.403509
+Color endTime: 2020-04-22 20:40:33.322571
+Color running time: 0:00:55.919062
+SURF startTime: 2020-04-22 20:40:33.324537
+SURF endTime: 2020-04-22 20:40:33.534966
+SURF running time: 0:00:00.210429
+ELA startTime: 2020-04-22 20:40:33.535889
+ELA endTime: 2020-04-22 20:40:52.267505
+ELA running time: 0:00:18.731616
+inputsubfolders:
+['000023.jpg', '000025.jpg', '000029.jpg', '000049.jpg', '000050.jpg', '000054.jpg', '000058.jpg', '000086.jpg', '000091.jpg', '000095.jpg']
+inputfiles:
+['000023.jpg', '000025.jpg', '000029.jpg', '000049.jpg', '000050.jpg', '000054.jpg', '000058.jpg', '000086.jpg', '000091.jpg', '000095.jpg']
+Color startTime: 2020-04-22 20:40:52.280476
+Color endTime: 2020-04-22 20:41:49.264527
+Color running time: 0:00:56.984051
+SURF startTime: 2020-04-22 20:41:49.270708
+SURF endTime: 2020-04-22 20:41:49.482138
+SURF running time: 0:00:00.211430
+ELA startTime: 2020-04-22 20:41:49.483133
+ELA endTime: 2020-04-22 20:42:07.890192
+ELA running time: 0:00:18.407059
+inputsubfolders:
+['000001.jpg', '000002.jpg', '000003.jpg', '000006.jpg', '000007.jpg', '000008.jpg', '000009.jpg', '000010.jpg', '000011.jpg', '000013.jpg']
+inputfiles:
+['000001.jpg', '000002.jpg', '000003.jpg', '000006.jpg', '000007.jpg', '000008.jpg', '000009.jpg', '000010.jpg', '000011.jpg', '000013.jpg']
+Color startTime: 2020-04-22 20:42:07.902162
+Color endTime: 2020-04-22 20:43:01.880820
+Color running time: 0:00:53.978658
+SURF startTime: 2020-04-22 20:43:01.882609
+SURF endTime: 2020-04-22 20:43:02.091529
+SURF running time: 0:00:00.208920
+ELA startTime: 2020-04-22 20:43:02.098388
+ELA endTime: 2020-04-22 20:43:19.783283
+ELA running time: 0:00:17.684895
+inputfolders:
+['attack_c23', 'original_c23']
+inputsubfolders:
+['01_02__exit_phone_room__YVGY8LOK', '01_09__exit_phone_room__6TSGVLHA']
+inputfiles:
+['FR_Frame0_Pic0.jpg', 'FR_Frame100_Pic10.jpg', 'FR_Frame10_Pic1.jpg', 'FR_Frame110_Pic11.jpg', 'FR_Frame120_Pic12.jpg', 'FR_Frame130_Pic13.jpg', 'FR_Frame140_Pic14.jpg', 'FR_Frame150_Pic15.jpg', 'FR_Frame160_Pic16.jpg', 'FR_Frame170_Pic17.jpg', 'FR_Frame180_Pic18.jpg', 'FR_Frame190_Pic19.jpg', 'FR_Frame200_Pic20.jpg', 'FR_Frame20_Pic2.jpg', 'FR_Frame30_Pic3.jpg', 'FR_Frame40_Pic4.jpg', 'FR_Frame50_Pic5.jpg', 'FR_Frame60_Pic6.jpg', 'FR_Frame70_Pic7.jpg', 'FR_Frame80_Pic8.jpg', 'FR_Frame90_Pic9.jpg']
+Color startTime: 2020-04-22 20:43:19.810358
+Color endTime: 2020-04-22 20:45:12.059502
+Color running time: 0:01:52.249144
+SURF startTime: 2020-04-22 20:45:12.061630
+SURF endTime: 2020-04-22 20:45:12.424033
+SURF running time: 0:00:00.362403
+ELA startTime: 2020-04-22 20:45:12.425408
+ELA endTime: 2020-04-22 20:45:48.440544
+ELA running time: 0:00:36.015136
+inputfiles:
+['FR_Frame0_Pic0.jpg', 'FR_Frame100_Pic10.jpg', 'FR_Frame10_Pic1.jpg', 'FR_Frame110_Pic11.jpg', 'FR_Frame120_Pic12.jpg', 'FR_Frame130_Pic13.jpg', 'FR_Frame140_Pic14.jpg', 'FR_Frame150_Pic15.jpg', 'FR_Frame160_Pic16.jpg', 'FR_Frame170_Pic17.jpg', 'FR_Frame180_Pic18.jpg', 'FR_Frame190_Pic19.jpg', 'FR_Frame200_Pic20.jpg', 'FR_Frame20_Pic2.jpg', 'FR_Frame210_Pic21.jpg', 'FR_Frame30_Pic3.jpg', 'FR_Frame40_Pic4.jpg', 'FR_Frame50_Pic5.jpg', 'FR_Frame60_Pic6.jpg', 'FR_Frame70_Pic7.jpg', 'FR_Frame80_Pic8.jpg', 'FR_Frame90_Pic9.jpg']
+Color startTime: 2020-04-22 20:45:48.453479
+Color endTime: 2020-04-22 20:47:47.087960
+Color running time: 0:01:58.634481
+SURF startTime: 2020-04-22 20:47:47.090308
+SURF endTime: 2020-04-22 20:47:49.710416
+SURF running time: 0:00:02.620108
+ELA startTime: 2020-04-22 20:47:49.711381
+ELA endTime: 2020-04-22 20:48:26.988308
+ELA running time: 0:00:37.276927
+inputsubfolders:
+['01__exit_phone_room']
+inputfiles:
+['FR_Frame0_Pic0.jpg', 'FR_Frame100_Pic10.jpg', 'FR_Frame10_Pic1.jpg', 'FR_Frame110_Pic11.jpg', 'FR_Frame120_Pic12.jpg', 'FR_Frame130_Pic13.jpg', 'FR_Frame140_Pic14.jpg', 'FR_Frame150_Pic15.jpg', 'FR_Frame160_Pic16.jpg', 'FR_Frame170_Pic17.jpg', 'FR_Frame180_Pic18.jpg', 'FR_Frame190_Pic19.jpg', 'FR_Frame200_Pic20.jpg', 'FR_Frame20_Pic2.jpg', 'FR_Frame210_Pic21.jpg', 'FR_Frame220_Pic22.jpg', 'FR_Frame230_Pic23.jpg', 'FR_Frame240_Pic24.jpg', 'FR_Frame250_Pic25.jpg', 'FR_Frame260_Pic26.jpg', 'FR_Frame270_Pic27.jpg', 'FR_Frame280_Pic28.jpg', 'FR_Frame290_Pic29.jpg', 'FR_Frame300_Pic30.jpg', 'FR_Frame60_Pic6.jpg', 'FR_Frame70_Pic7.jpg', 'FR_Frame80_Pic8.jpg', 'FR_Frame90_Pic9.jpg']
+Color startTime: 2020-04-22 20:48:27.007916
+Color endTime: 2020-04-22 20:50:59.495743
+Color running time: 0:02:32.487827
+SURF startTime: 2020-04-22 20:50:59.496742
+SURF endTime: 2020-04-22 20:50:59.938690
+SURF running time: 0:00:00.441948
+ELA startTime: 2020-04-22 20:50:59.939655
+ELA endTime: 2020-04-22 20:51:52.770204
+ELA running time: 0:00:52.830549

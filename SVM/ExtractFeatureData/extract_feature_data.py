@@ -1,109 +1,126 @@
 import os
 import datetime
+import pandas as pd
 from CommonFunction.extract_color_data import extract_color_data
 from CommonFunction.extract_SURF_data import extract_SURF_data
 from CommonFunction.extract_ELA_data import extract_ELA_data
 
-common_folder_path = 'G:/SVM/'
+# init some variables
+pathlist = ['Celeba', 'PGGAN', 'DFD']
+inputpaths = ['G:/SVM/' + i + '_face/' for i in pathlist]
 
-# dataset = 'Celeba_face'
-# dataset = 'PGGAN_face'
-dataset = 'DFD_face'
 
-input_dataset_path = common_folder_path + dataset
-output_dataset_path = common_folder_path + dataset[:-5] + '_feature_data'
+def color(inputfiles, inputpath_new, outputfile_color):
+    excel_writer = pd.ExcelWriter(outputfile_color)
+    for inputfile in inputfiles:
+        inputpath_file = inputpath_new + inputfile
+        # print(inputpath_file)
+        extract_color_data(inputpath_file, excel_writer)
+    excel_writer.save()
+    excel_writer.close()
 
-def extract_feature():
-    if not os.path.exists(output_dataset_path):
-        os.mkdir(output_dataset_path)
-    folder_lists = os.listdir(input_dataset_path)
-    # ①
-    for folder_list in folder_lists:
-        if os.path.isfile(input_dataset_path + '/' + folder_list):
-            folder_lists.remove(folder_list)
-    for folder_list in folder_lists:
-        # There are subfolders in these 3 folders
-        if (folder_list != 'img_pggan') and (folder_list != 'attack_c23') and (folder_list != 'original_c23'):
-            input_img_folder_path = input_dataset_path + '/' + folder_list
-            output_img_folder_path = output_dataset_path + '/' + folder_list
-            output_img_color_path = output_img_folder_path + '/color'
-            output_img_SURF_path = output_img_folder_path + '/SURF'
-            output_img_ELA_path = output_img_folder_path + '/ELA'
-            # avoid repeat work
-            if not os.path.exists(output_img_folder_path):
-                os.mkdir(output_img_folder_path)
-                if not os.path.exists(output_img_color_path):
-                    os.mkdir(output_img_color_path)
-                if not os.path.exists(output_img_SURF_path):
-                    os.mkdir(output_img_SURF_path)
-                if not os.path.exists(output_img_ELA_path):
-                    os.mkdir(output_img_ELA_path)
-                img_lists = os.listdir(input_img_folder_path)
-                for img_list in img_lists:
-                    # ②
-                    if not img_list.endswith('.txt'):
-                        inputpath = input_img_folder_path + '/' + img_list
-                        draw_color_histogram(inputpath , output_img_color_path + '/' + img_list)
-                        draw_SURF(inputpath , output_img_SURF_path + '/' + img_list)
-                        draw_ELA(inputpath , output_img_ELA_path) 
-        else:
-            subfolder_lists = os.listdir(input_dataset_path + '/' + folder_list)
-            # ③
-            for subfolder_list in subfolder_lists:
-                if os.path.isfile(input_dataset_path + '/' + folder_list + '/' + subfolder_list):
-                    subfolder_lists.remove(subfolder_list)
-            for subfolder_list in subfolder_lists:
-                input_img_folder_path = input_dataset_path + '/' + folder_list + '/' + subfolder_list
-                output_img_folder_path = output_dataset_path + '/' + folder_list
-                output_img_subfolder_path = output_dataset_path + '/' + folder_list + '/' + subfolder_list
-                output_img_color_path = output_img_subfolder_path + '/color'
-                output_img_SURF_path = output_img_subfolder_path + '/SURF'
-                output_img_ELA_path = output_img_subfolder_path + '/ELA'
-                if not os.path.exists(output_img_folder_path):
-                    os.mkdir(output_img_folder_path)
-                # avoid repeat work
-                if not os.path.exists(output_img_subfolder_path):
-                    os.mkdir(output_img_subfolder_path)
-                    if not os.path.exists(output_img_color_path):
-                        os.mkdir(output_img_color_path)
-                    if not os.path.exists(output_img_SURF_path):
-                        os.mkdir(output_img_SURF_path)
-                    if not os.path.exists(output_img_ELA_path):
-                        os.mkdir(output_img_ELA_path)
-                    img_lists = os.listdir(input_img_folder_path)
-                    for img_list in img_lists:
-                        # ④
-                        if not img_list.endswith('.txt'):
-                            inputpath = input_img_folder_path + '/' + img_list
-                            draw_color_histogram(inputpath , output_img_color_path + '/' + img_list)
-                            draw_SURF(inputpath , output_img_SURF_path + '/' + img_list)
-                            draw_ELA(inputpath , output_img_ELA_path)
+
+def SURF(inputfiles, inputpath_new, outputfile_SURF):
+    excel_writer = pd.ExcelWriter(outputfile_SURF)
+    for inputfile in inputfiles:
+        inputpath_file = inputpath_new + inputfile
+        # print(inputpath_file)
+        extract_SURF_data(inputpath_file, excel_writer)
+    excel_writer.save()
+    excel_writer.close()
+
+
+def ELA(inputfiles, inputpath_new, outputfile_ELA, outputpath_ELA):
+    excel_writer = pd.ExcelWriter(outputfile_ELA)
+    for inputfile in inputfiles:
+        inputpath_file = inputpath_new + inputfile
+        # print(inputpath_file)
+        extract_ELA_data(inputpath_file, outputpath_ELA, excel_writer)
+    excel_writer.save()
+    excel_writer.close()
+
+
+def print_time(inputfiles, inputpath_new, outputfile_color, outputfile_SURF, outputfile_ELA, outputpath_ELA):
+    color_startTime = datetime.datetime.now()
+    print('Color startTime: {}'.format(color_startTime))
+    color(inputfiles, inputpath_new, outputfile_color)
+    color_endTime = datetime.datetime.now()
+    print('Color endTime: {}'.format(color_endTime))
+    print('Color running time: {}'.format(color_endTime - color_startTime))
+
+    SURF_startTime = datetime.datetime.now()
+    print('SURF startTime: {}'.format(SURF_startTime))
+    SURF(inputfiles, inputpath_new, outputfile_SURF)
+    SURF_endTime = datetime.datetime.now()
+    print('SURF endTime: {}'.format(SURF_endTime))
+    print('SURF running time: {}'.format(SURF_endTime - SURF_startTime))
+
+    ELA_startTime = datetime.datetime.now()
+    print('ELA startTime: {}'.format(ELA_startTime))
+    ELA(inputfiles, inputpath_new, outputfile_ELA, outputpath_ELA)
+    ELA_endTime = datetime.datetime.now()
+    print('ELA endTime: {}'.format(ELA_endTime))
+    print('ELA running time: {}'.format(ELA_endTime - ELA_startTime))
+
+
+def main():
+    for inputpath in inputpaths:
+        outputpath = inputpath[:-6] + '_feature_data/'
+        if not os.path.exists(outputpath):
+            os.mkdir(outputpath)
+        inputfolders = os.listdir(inputpath)
+        print('inputfolders:')
+        print(inputfolders)
+        inputsubfolders = []
+        inputfiles = []
+
+        # main program
+        for inputfolder in inputfolders:
+            # inputfolder(eg. Celeba/train, test, ... folders) is not endswith '.jpg'
+            if not inputfolder.endswith('.jpg'):
+                inputsubfolders = os.listdir(inputpath + inputfolder)
+                print('inputsubfolders:')
+                print(inputsubfolders)
+
+                # inputsubfolders[0](eg. PGGAN_face/img_pggan/zip000000, ... folders) is not endswith '.jpg'
+                if not inputsubfolders[0].endswith('.jpg'):
+                    if not os.path.exists(outputpath + inputfolder):
+                        os.mkdir(outputpath + inputfolder)
+                    for inputsubfolder in inputsubfolders:
+                        inputfiles = os.listdir(
+                            inputpath + inputfolder + '/' + inputsubfolder)
+                        print('inputfiles:')
+                        print(inputfiles)
+                        # processing ...
+                        inputpath_new = inputpath + inputfolder + '/' + inputsubfolder + '/'
+                        outputfile_color = outputpath + inputfolder + \
+                            '/' + inputsubfolder + '_color.xlsx'
+                        outputfile_SURF = outputpath + inputfolder + '/' + inputsubfolder + '_SURF.xlsx'
+                        outputfile_ELA = outputpath + inputfolder + '/' + inputsubfolder + '_ELA.xlsx'
+                        outputpath_ELA = outputpath + inputfolder + '/'
+                        print_time(inputfiles, inputpath_new, outputfile_color,
+                                   outputfile_SURF, outputfile_ELA, outputpath_ELA)
+
+                # inputsubfolders[0](eg. Celeba/train/000000.jpg, 000001.jpg, ... files) is endswith '.jpg'
+                elif inputsubfolders[0].endswith('.jpg'):
+                    inputfiles = inputsubfolders
+                    print('inputfiles:')
+                    print(inputfiles)
+                    # processing ...
+                    inputpath_new = inputpath + inputfolder + '/'
+                    outputfile_color = outputpath + inputfolder + '_color.xlsx'
+                    outputfile_SURF = outputpath + inputfolder + '_SURF.xlsx'
+                    outputfile_ELA = outputpath + inputfolder + '_ELA.xlsx'
+                    outputpath_ELA = outputpath + '/'
+                    print_time(inputfiles, inputpath_new, outputfile_color,
+                               outputfile_SURF, outputfile_ELA, outputpath_ELA)
+
+            elif inputfolder.endswith('.jpg'):
+                inputfiles = inputfolders
+                print('inputfiles:')
+                print(inputfiles)
+                # processing ... BUT this case is NOT exist
 
 
 if __name__ == '__main__':
-    
-    startTime = datetime.datetime.now()
-    print('startTime: {}'.format(startTime))
-    
-    extract_feature()
-
-    endTime = datetime.datetime.now()
-    print('endTime: {}'.format(endTime))
-    print('Running time: {}'.format(endTime - startTime))
-
-# ①~④ avoid processing log.txt file
-
-# Celeba 
-# startTime: 2020-02-25 18:08:30.578360
-# endTime: 2020-02-25 22:50:47.230785
-# Running time: 4:42:16.652425
-
-# PGGAN 
-# startTime: 2020-02-25 18:09:01.274854
-# endTime: 2020-02-25 22:58:56.398361
-# Running time: 4:49:55.123507
-
-# DFD
-# startTime: 2020-02-25 18:09:41.216839
-# endTime: 2020-02-26 12:08:03.989166
-# Running time: 17:58:22.772327
+    main()

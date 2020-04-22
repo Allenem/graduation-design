@@ -33,7 +33,7 @@ def extract_ELA_data(inputpath, outputpath, outputfile):
                 pixel.append(ela_image.getpixel((w, h)))
             pixel_data.append(pixel)
             pixel = []
-        print(len(pixel_data))
+        # print(len(pixel_data))  # 256
 
         dt = pd.DataFrame(pixel_data)
         sheet_name = inputpath.split('/')[-1][:-4]
