@@ -838,7 +838,7 @@ Running time: 17:58:22.772327
 文件结构：
 
 ```bash
-ExtractFeatureData            # 特征数据提取代码文件夹
+ExtractFeatureData             # 特征数据提取代码文件夹
   │  extract_feature_data.py   # 特征数据提取主程序
   │  OUTPUT.txt                # 部分运行日志
   │  test.py                   # 特征数据提取主程序之前的测试代码
@@ -851,11 +851,20 @@ ExtractFeatureData            # 特征数据提取代码文件夹
 
 三个特征分别由三个py文件提取并保存到Excel中。一组图片的同一特征存在同一个Excel文件中，每张图片占一个sheet。
 
-color特征：分bgr3列，每列有256*256=65536行；
+① color特征：分bgr3列，每列有256*256=65536行；
 
-SURF特征：统一每张图选取半径最大的15个点作为特征点，不足则补零；
+② SURF特征：先提取SURF特征，核心代码如下，然后统一每张图选取半径最大的15个点作为特征点，不足则补零；
 
-ELA特征：首先将图片灰度化，然后提取ELA特征，每张图256行256列共65536像素。
+```py
+img = cv2.imread(inputpath)
+surf = cv2.xfeatures2d.SURF_create(4000)
+kps, features = surf.detectAndCompute(img, None)
+kps_data = []
+for kp in kps:
+    kps_data.append([kp.pt[0], kp.pt[1], kp.angle, kp.size])
+```
+
+③ ELA特征：首先将图片灰度化，然后提取ELA特征，每张图256行256列共65536像素。
 
 ### 4.SVM_SGDClassifier的训练和测试
 
