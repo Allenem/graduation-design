@@ -8,7 +8,7 @@
 - [x] [学习特征提取](#四学习特征提取)
 - [x] [数据库预处理](#五数据库预处理)
 - [x] [Celeba PGGAN DFD 数据集特征提取](#六CelebaPGGANDFD数据集特征提取)
-- [ ] [SVM 分类器分类](#七SVM分类器分类)
+- [x] [SVM 分类器分类](#七SVM分类器分类)
 - [ ] [完成论文](#八完成论文)
 
 ---
@@ -756,6 +756,8 @@ G:/PGGAN/img_pggan/zip099000 fileslen: 1000 pngcount: 1000 notpng: 0 damaged: 0
 
 代码详见：[./DatabaseFeatureExtraction/extract_feature.py](./DatabaseFeatureExtraction/extract_feature.py)
 
+！！！注意：这里的特征提取代码只是将特征提取，然后绘制到图片上保存。后面我们将训练SVM分类器，所以需要用到特征数据，这样才比较方便。因此，后文将首先讲述特征数据的提取并保存至Excel文件，然后训练、测试SVM分类器。
+
 matplotlib中cla() clf() close()用途
 ```py
 import matplotlib.pyplot as plt
@@ -806,10 +808,14 @@ Running time: 17:58:22.772327
 
 >学习参考：   
 >https://scikit-learn.org/stable/modules/classes.html#module-sklearn.svm   
+>https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html#sklearn.linear_model.SGDClassifier   
 >代码参考:   
 >https://blog.csdn.net/weixin_41322458/article/details/94389356   
+>http://sofasofa.io/forum_main_post.php?postid=1001110   
+>文献参考：   
+>[支持向量机理论与算法研究综述_丁世飞](./References/[12]支持向量机理论与算法研究综述_丁世飞.pdf)
 
-练手代码
+### 1.练手代码
 
 [./SVM/svm_learning.py](./SVM/svm_learning.py)
 
@@ -819,11 +825,101 @@ Running time: 17:58:22.772327
 
 ![svm_eg.png](./screenshots/svm_eg.png)
 
+### 2.SVM原理简介
+
+:x: 未经许可，禁止套用！！！
+
+![SVM原理简介](./screenshots/SVM简介.png)
+
+### 3.特征数据提取
+
+文件夹：[./SVM/ExtractFeatureData](./SVM/ExtractFeatureData)
+
+文件结构：
+
+```bash
+ExtractFeatureData            # 特征数据提取代码文件夹
+  │  extract_feature_data.py   # 特征数据提取主程序
+  │  OUTPUT.txt                # 部分运行日志
+  │  test.py                   # 特征数据提取主程序之前的测试代码
+  │
+  └─CommonFunction             # 公用函数，分别提取特征并存入excel的一个sheet
+        extract_color_data.py
+        extract_SURF_data.py
+        extract_ELA_data.py
+```
+
+三个特征分别由三个py文件提取并保存到Excel中。一组图片的同一特征存在同一个Excel文件中，每张图片占一个sheet。
+
+color特征：分bgr3列，每列有256*256=65536行；
+
+SURF特征：统一每张图选取半径最大的15个点作为特征点，不足则补零；
+
+ELA特征：首先将图片灰度化，然后提取ELA特征，每张图256行256列共65536像素。
+
+### 4.SVM_SGDClassifier的训练和测试
+
+文件夹：[./SVM/SVM-SGD](./SVM/SVM-SGD)
+
+文件结构：
+
+```bash
+SVM-SGD                        # SGD(Stochastic Gradient Descent)
+  │  svm_SGD.py                # 随机梯度下降分类器主程序(含训练、测试代码)
+  │
+  └─GetData                    # 从excel中提取数据返回一维列表，3者基本一样
+        get_color.py
+        get_SURF.py            # 3者中最先写的，注释详细
+        get_ELA.py
+```
+
+`get_XXX` 函数每次提取一个Excel的所有sheet的数据，返回list，每个sheet都展平为1维，占list一个元素位。
+
+`svm_SGD.py` 调用三个函数获取数据，然后通过以下函数训练数据得到SVM模型、用SVM模型预测数据类别。核心代码如下：
+
+```py
+clf = SGDClassifier()
+clf.partial_fit(X, Y, classes=np.array([0, 1]))
+joblib.dump(clf, savepath + '/' + 'clf.pkl')
+
+clf2 = joblib.load(savepath+'/'+'clf.pkl')
+Z = clf2.predict(X)
+accuracy = clf2.score(X, Y)
+```
+
+OUPUT:
+```bash
+Running Time of 训练color特征SVM分类器 : 0:02:31.862390
+
+测试数据实际真假：[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+测试数据预测真假：[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1 1 1 0 0]
+color_clf 预测准确率：0.6164383561643836
+Running Time of 测试color特征SVM分类器 : 0:02:21.229064
+
+Running Time of 训练SURF特征SVM分类器 : 0:00:00.309207
+
+测试数据实际真假：[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+测试数据预测真假：[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 1 1 1 1 0 1 0 0 1 1 0 1 1 1 1 1 0 1 1 1 1 0 0 0 0 0 0 0 1 0 0 0]
+SURF_clf 预测准确率：0.6438356164383562
+Running Time of 测试SURF特征SVM分类器 : 0:00:00.271234
+
+Running Time of 训练ELA特征SVM分类器 : 0:00:36.909247
+
+测试数据实际真假：[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+测试数据预测真假：[1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0 0 1 0 1 1 0 1 1 1 1 0 1 0 1 1 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0]
+ELA_clf 预测准确率：0.6575342465753424
+Running Time of 测试ELA特征SVM分类器 : 0:00:33.487409
+```
+
+最终分类器准确率大约为 **63%** 上下。估计很大原因是由于训练数据较少，所以准确率较低，未来工作将是大量数据训练和测试。 :muscle:
+
 ---
 
 ## 八、完成论文
 
-《开题报告》 《毕业论文》 详见：[./Paper](./Paper) 文件夹 (未完待续。。。)
+《开题报告》 《毕业论文》 详见：[./Paper](./Paper) 文件夹 
+
+论文将在毕设答辩之后上传
 
 ---
 

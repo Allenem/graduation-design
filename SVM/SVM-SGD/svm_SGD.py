@@ -112,7 +112,7 @@ def test_color():
     accuracy = color_clf2.score(X, Y)
     print('测试数据实际真假：{}'.format(Y))
     print('测试数据预测真假：{}'.format(Z))
-    print('预测准确率：{}'.format(accuracy))
+    print('color_clf 预测准确率：{}'.format(accuracy))
 
     excel_num = 0
     X = []
@@ -200,7 +200,7 @@ def test_SURF():
     accuracy = SURF_clf2.score(X, Y)
     print('测试数据实际真假：{}'.format(Y))
     print('测试数据预测真假：{}'.format(Z))
-    print('预测准确率：{}'.format(accuracy))
+    print('SURF_clf 预测准确率：{}'.format(accuracy))
 
     excel_num = 0
     X = []
@@ -284,7 +284,7 @@ def test_ELA():
     accuracy = ELA_clf2.score(X, Y)
     print('测试数据实际真假：{}'.format(Y))
     print('测试数据预测真假：{}'.format(Z))
-    print('预测准确率：{}'.format(accuracy))
+    print('ELA_clf 预测准确率：{}'.format(accuracy))
 
     excel_num = 0
     X = []
