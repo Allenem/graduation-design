@@ -120,3 +120,14 @@ SURF running time: 0:00:00.441948
 ELA startTime: 2020-04-22 20:50:59.939655
 ELA endTime: 2020-04-22 20:51:52.770204
 ELA running time: 0:00:52.830549
+inputfiles:
+['FR_Frame100_Pic10.jpg', 'FR_Frame110_Pic11.jpg', 'FR_Frame120_Pic12.jpg', 'FR_Frame130_Pic13.jpg', 'FR_Frame140_Pic14.jpg', 'FR_Frame150_Pic15.jpg', 'FR_Frame160_Pic16.jpg', 'FR_Frame170_Pic17.jpg', 'FR_Frame180_Pic18.jpg', 'FR_Frame190_Pic19.jpg', 'FR_Frame200_Pic20.jpg', 'FR_Frame210_Pic21.jpg', 'FR_Frame220_Pic22.jpg', 'FR_Frame230_Pic23.jpg', 'FR_Frame240_Pic24.jpg', 'FR_Frame250_Pic25.jpg', 'FR_Frame260_Pic26.jpg', 'FR_Frame270_Pic27.jpg', 'FR_Frame280_Pic28.jpg', 'FR_Frame290_Pic29.jpg', 'FR_Frame300_Pic30.jpg', 'FR_Frame310_Pic31.jpg', 'FR_Frame320_Pic32.jpg', 'FR_Frame330_Pic33.jpg', 'FR_Frame340_Pic34.jpg', 'FR_Frame350_Pic35.jpg', 'FR_Frame360_Pic36.jpg', 'FR_Frame60_Pic6.jpg', 'FR_Frame70_Pic7.jpg', 'FR_Frame80_Pic8.jpg', 'FR_Frame90_Pic9.jpg']
+Color startTime: 2020-05-02 18:48:46.862044
+Color endTime: 2020-05-02 18:51:51.709547
+Color running time: 0:03:04.847503
+SURF startTime: 2020-05-02 18:51:51.711510
+SURF endTime: 2020-05-02 18:51:54.381247
+SURF running time: 0:00:02.669737
+ELA startTime: 2020-05-02 18:51:54.382212
+ELA endTime: 2020-05-02 18:52:51.339480
+ELA running time: 0:00:56.957268

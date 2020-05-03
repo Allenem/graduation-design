@@ -1,12 +1,14 @@
 from sklearn import svm
 import pickle
 
+# Ⅰ.EXAMPLE ONE
+
 # training samples
-X = [[0, 0], [0, 1], [1, 0,], [1, 1]]
+X = [[0, 0], [0, 1], [1, 0], [1, 1]]
 # training targets
 Y = [0, 1, 2, 3]
 # class
-# Parameters: 
+# Parameters:
 # C: float, optional (default = 1.0)
 # kernel: string, optional (default = 'rbf')
 # degree: int, optional (default = 3)
@@ -42,3 +44,26 @@ print(pred)  # [1 0]
 #     max_iter=-1, probability=False, random_state=None, shrinking=True,
 #     tol=0.001, verbose=False)
 # [1 0]
+
+
+# Ⅱ.EXAMPLE TWO
+
+A = [[0, 0], [0, 1], [1, 0], [1, 1]]
+B = [[0, 2], [1, 2], [2, 1], [2, 2]]
+C = [0, 1]
+clf = svm.SVC()
+print(len(A))
+print([C[0]]*len(A))
+clf.fit(A+B, [C[0]]*len(A)+[C[1]]*len(B))
+accuracy_result = clf.score([[0, 0], [0, 1], [1, 0], [1, 1]], [0, 1, 1, 3])
+print(accuracy_result)  # 0.25
+print(A+B)
+predict_result = clf.predict(A+B+[[0.5, 1]])
+print(predict_result)  # [0 0 0 0 1 1 1 1]
+
+# OUTPUT
+# 4
+# [0, 0, 0, 0]
+# 0.25
+# [[0, 0], [0, 1], [1, 0], [1, 1], [0, 2], [1, 2], [2, 1], [2, 2]]
+# [0 0 0 0 1 1 1 1]
