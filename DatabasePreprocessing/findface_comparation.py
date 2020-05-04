@@ -38,11 +38,18 @@ def findfaceDlib():
     for imglist in imglists:
         img = cv2.imread(inputpath+'/'+imglist)
         dets = detector(img, 1)
-        for i, d in enumerate(dets):
-            x1, y1, x2, y2 = d.left(), d.top(), d.right(), d.bottom()
-            face = img[y1:y2, x1:x2]
-            resized_face = cv2.resize(face, (resize_x, resize_y))
+        if len(dets) == 0:
+            print('No face in {}'.format(imglist))
+            for x in range(resize_x):
+                for y in range(resize_y):
+                    resized_face[x, y] = [0, 0, 0]
             cv2.imwrite(outputpath+'/Dlib_'+imglist, resized_face)
+        else:
+            for i, d in enumerate(dets):
+                x1, y1, x2, y2 = d.left(), d.top(), d.right(), d.bottom()
+                face = img[y1:y2, x1:x2]
+                resized_face = cv2.resize(face, (resize_x, resize_y))
+                cv2.imwrite(outputpath+'/Dlib_'+imglist, resized_face)
 
 
 def findfaceFR():

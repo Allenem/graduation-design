@@ -9,7 +9,7 @@
 - [x] [数据库预处理](#五数据库预处理)
 - [x] [Celeba PGGAN DFD 数据集特征提取](#六CelebaPGGANDFD数据集特征提取)
 - [x] [SVM 分类器分类](#七SVM分类器分类)
-- [ ] [完成论文](#八完成论文)
+- [x] [完成论文](#八完成论文)
 
 ---
 
@@ -829,7 +829,8 @@ Running time: 17:58:22.772327
 
 :x: 未经许可，禁止套用！！！
 
-![SVM原理简介](./screenshots/SVM简介.png)
+<center><img src='./screenshots/SVM简介.png' /></center>
+
 
 ### 3.特征数据提取
 
