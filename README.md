@@ -823,13 +823,13 @@ Running time: 17:58:22.772327
 
 截图
 
-![svm_eg.png](./screenshots/svm_eg.png)
+<p align='center'><img src='./screenshots/svm_eg.png' /></p>
 
 ### 2.SVM原理简介
 
 :x: 未经许可，禁止套用！！！
 
-<center><img src='./screenshots/SVM简介.png' /></center>
+<p align='center'><img src='./screenshots/SVM简介.png' /></p>
 
 
 ### 3.特征数据提取
