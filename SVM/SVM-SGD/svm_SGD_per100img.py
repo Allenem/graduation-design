@@ -33,16 +33,18 @@ ELA_true_data_test = []
 ELA_fake_data_test = []
 X = []
 Y = []
+accuracy_set = []
 
 
 def train_color():
     print('color特征SVM分类器训练开始 ……')
+    color_clf = SGDClassifier()
     excel_num = 0
     for train_true_list in train_true_lists:
         if train_true_list.endswith('color.xlsx'):
             inputpath = train_true + '/' + train_true_list
             sheets, sheets_1dim = get_color(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 color_true_data_train = sheets_1dim
                 Y = [1]*len(sheets_1dim)
             else:
@@ -50,27 +52,32 @@ def train_color():
                     color_true_data_train.append(sheets_1dim[i])
                     Y.append(1)
             excel_num += 1
+            if excel_num % 10 == 0:
+                X = color_true_data_train
+                color_clf.partial_fit(X, Y, classes=np.array([0, 1]))
+                X = []
+                Y = []
 
     excel_num = 0
     for train_fake_list in train_fake_lists:
         if train_fake_list.endswith('color.xlsx'):
             inputpath = train_fake + '/' + train_fake_list
             sheets, sheets_1dim = get_color(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 color_fake_data_train = sheets_1dim
-                Y += [0] * len(sheets_1dim)
+                Y = [0] * len(sheets_1dim)
             else:
                 for i in range(len(sheets_1dim)):
                     color_fake_data_train.append(sheets_1dim[i])
                     Y.append(0)
             excel_num += 1
-    print('训练数据实际真假：{}'.format(Y))
+            if excel_num % 10 == 0:
+                X = color_fake_data_train
+                color_clf.partial_fit(X, Y, classes=np.array([0, 1]))
+                X = []
+                Y = []
 
-    X = color_true_data_train + color_fake_data_train
-    color_clf = SGDClassifier()
-    color_clf.partial_fit(X, Y, classes=np.array([0, 1]))
     joblib.dump(color_clf, savepath + 'color_clf.pkl')
-
     excel_num = 0
     X = []
     Y = []
@@ -78,12 +85,13 @@ def train_color():
 
 def test_color():
     print('color特征SVM分类器测试开始 ……')
+    color_clf2 = joblib.load(savepath + 'color_clf.pkl')
     excel_num = 0
     for test_true_list in test_true_lists:
         if test_true_list.endswith('color.xlsx'):
             inputpath = test_true + '/' + test_true_list
             sheets, sheets_1dim = get_color(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 color_true_data_test = sheets_1dim
                 Y = [1]*len(sheets_1dim)
             else:
@@ -91,42 +99,55 @@ def test_color():
                     color_true_data_test.append(sheets_1dim[i])
                     Y.append(1)
             excel_num += 1
+            if excel_num % 10 == 0:
+                X = color_true_data_test
+                Z = color_clf2.predict(X)
+                accuracy = color_clf2.score(X, Y)
+                accuracy_set.append(accuracy)
+                X = []
+                Y = []
+                Z = []
 
     excel_num = 0
     for test_fake_list in test_fake_lists:
         if test_fake_list.endswith('color.xlsx'):
             inputpath = test_fake + '/' + test_fake_list
             sheets, sheets_1dim = get_color(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 color_fake_data_test = sheets_1dim
-                Y += [0] * len(sheets_1dim)
+                Y = [0] * len(sheets_1dim)
             else:
                 for i in range(len(sheets_1dim)):
                     color_fake_data_test.append(sheets_1dim[i])
                     Y.append(0)
             excel_num += 1
+            if excel_num % 10 == 0:
+                X = color_fake_data_test
+                Z = color_clf2.predict(X)
+                accuracy = color_clf2.score(X, Y)
+                accuracy_set.append(accuracy)
+                X = []
+                Y = []
+                Z = []
 
-    X = color_true_data_test + color_fake_data_test
-    color_clf2 = joblib.load(savepath + 'color_clf.pkl')
-    Z = color_clf2.predict(X)
-    accuracy = color_clf2.score(X, Y)
-    print('测试数据实际真假：{}'.format(Y))
-    print('测试数据预测真假：{}'.format(Z))
-    print('color_clf 预测准确率：{}'.format(accuracy))
-
+    print('color_clf average accuracy: {}'.format(
+        sum(accuracy_set)/len(accuracy_set)))
     excel_num = 0
     X = []
     Y = []
+    Z = []
+    accuracy_set = []
 
 
 def train_SURF():
     print('SURF特征SVM分类器训练开始 ……')
+    SURF_clf = SGDClassifier()
     excel_num = 0
     for train_true_list in train_true_lists:
         if train_true_list.endswith('SURF.xlsx'):
             inputpath = train_true + '/' + train_true_list
             sheets, sheets_1dim = get_SURF(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 SURF_true_data_train = sheets_1dim
                 Y = [1]*len(sheets_1dim)
             else:
@@ -134,31 +155,32 @@ def train_SURF():
                     SURF_true_data_train.append(sheets_1dim[i])
                     Y.append(1)
             excel_num += 1
+            if excel_num % 10 == 0:
+                X = SURF_true_data_train
+                SURF_clf.partial_fit(X, Y, classes=np.array([0, 1]))
+                X = []
+                Y = []
 
     excel_num = 0
     for train_fake_list in train_fake_lists:
         if train_fake_list.endswith('SURF.xlsx'):
             inputpath = train_fake + '/' + train_fake_list
             sheets, sheets_1dim = get_SURF(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 SURF_fake_data_train = sheets_1dim
-                Y += [0] * len(sheets_1dim)
+                Y = [0] * len(sheets_1dim)
             else:
                 for i in range(len(sheets_1dim)):
                     SURF_fake_data_train.append(sheets_1dim[i])
                     Y.append(0)
             excel_num += 1
-    print('训练数据实际真假：{}'.format(Y))
+            if excel_num % 10 == 0:
+                X = SURF_fake_data_train
+                SURF_clf.partial_fit(X, Y, classes=np.array([0, 1]))
+                X = []
+                Y = []
 
-    X = SURF_true_data_train + SURF_fake_data_train
-    # print(type(X))  # list
-    # print(len(X))
-    # print(len(Y))
-
-    SURF_clf = SGDClassifier()
-    SURF_clf.partial_fit(X, Y, classes=np.array([0, 1]))
     joblib.dump(SURF_clf, savepath + 'SURF_clf.pkl')
-
     excel_num = 0
     X = []
     Y = []
@@ -166,12 +188,13 @@ def train_SURF():
 
 def test_SURF():
     print('SURF特征SVM分类器测试开始 ……')
+    SURF_clf2 = joblib.load(savepath + 'SURF_clf.pkl')
     excel_num = 0
     for test_true_list in test_true_lists:
         if test_true_list.endswith('SURF.xlsx'):
             inputpath = test_true + '/' + test_true_list
             sheets, sheets_1dim = get_SURF(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 SURF_true_data_test = sheets_1dim
                 Y = [1]*len(sheets_1dim)
             else:
@@ -179,42 +202,55 @@ def test_SURF():
                     SURF_true_data_test.append(sheets_1dim[i])
                     Y.append(1)
             excel_num += 1
+            if excel_num % 10 == 0:
+                X = SURF_true_data_test
+                Z = SURF_clf2.predict(X)
+                accuracy = SURF_clf2.score(X, Y)
+                accuracy_set.append(accuracy)
+                X = []
+                Y = []
+                Z = []
 
     excel_num = 0
     for test_fake_list in test_fake_lists:
         if test_fake_list.endswith('SURF.xlsx'):
             inputpath = test_fake + '/' + test_fake_list
             sheets, sheets_1dim = get_SURF(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 SURF_fake_data_test = sheets_1dim
-                Y += [0] * len(sheets_1dim)
+                Y = [0] * len(sheets_1dim)
             else:
                 for i in range(len(sheets_1dim)):
                     SURF_fake_data_test.append(sheets_1dim[i])
                     Y.append(0)
             excel_num += 1
+            if excel_num % 10 == 0:
+                X = SURF_fake_data_test
+                Z = SURF_clf2.predict(X)
+                accuracy = SURF_clf2.score(X, Y)
+                accuracy_set.append(accuracy)
+                X = []
+                Y = []
+                Z = []
 
-    X = SURF_true_data_test + SURF_fake_data_test
-    SURF_clf2 = joblib.load(savepath + 'SURF_clf.pkl')
-    Z = SURF_clf2.predict(X)
-    accuracy = SURF_clf2.score(X, Y)
-    print('测试数据实际真假：{}'.format(Y))
-    print('测试数据预测真假：{}'.format(Z))
-    print('SURF_clf 预测准确率：{}'.format(accuracy))
-
+    print('SURF_clf average accuracy: {}'.format(
+        sum(accuracy_set)/len(accuracy_set)))
     excel_num = 0
     X = []
     Y = []
+    Z = []
+    accuracy_set = []
 
 
 def train_ELA():
     print('ELA特征SVM分类器训练开始 ……')
+    ELA_clf = SGDClassifier()
     excel_num = 0
     for train_true_list in train_true_lists:
         if train_true_list.endswith('ELA.xlsx'):
             inputpath = train_true + '/' + train_true_list
             sheets, sheets_1dim = get_ELA(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 ELA_true_data_train = sheets_1dim
                 Y = [1]*len(sheets_1dim)
             else:
@@ -222,27 +258,32 @@ def train_ELA():
                     ELA_true_data_train.append(sheets_1dim[i])
                     Y.append(1)
             excel_num += 1
+            if excel_num % 10 == 0:
+                X = ELA_true_data_train
+                ELA_clf.partial_fit(X, Y, classes=np.array([0, 1]))
+                X = []
+                Y = []
 
     excel_num = 0
     for train_fake_list in train_fake_lists:
         if train_fake_list.endswith('ELA.xlsx'):
             inputpath = train_fake + '/' + train_fake_list
             sheets, sheets_1dim = get_ELA(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 ELA_fake_data_train = sheets_1dim
-                Y += [0] * len(sheets_1dim)
+                Y = [0] * len(sheets_1dim)
             else:
                 for i in range(len(sheets_1dim)):
                     ELA_fake_data_train.append(sheets_1dim[i])
                     Y.append(0)
             excel_num += 1
-    print('训练数据实际真假：{}'.format(Y))
+            if excel_num % 10 == 0:
+                X = ELA_fake_data_train
+                ELA_clf.partial_fit(X, Y, classes=np.array([0, 1]))
+                X = []
+                Y = []
 
-    X = ELA_true_data_train + ELA_fake_data_train
-    ELA_clf = SGDClassifier()
-    ELA_clf.partial_fit(X, Y, classes=np.array([0, 1]))
     joblib.dump(ELA_clf, savepath + 'ELA_clf.pkl')
-
     excel_num = 0
     X = []
     Y = []
@@ -250,12 +291,13 @@ def train_ELA():
 
 def test_ELA():
     print('ELA特征SVM分类器测试开始 ……')
+    ELA_clf2 = joblib.load(savepath + 'ELA_clf.pkl')
     excel_num = 0
     for test_true_list in test_true_lists:
         if test_true_list.endswith('ELA.xlsx'):
             inputpath = test_true + '/' + test_true_list
             sheets, sheets_1dim = get_ELA(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 ELA_true_data_test = sheets_1dim
                 Y = [1]*len(sheets_1dim)
             else:
@@ -263,32 +305,44 @@ def test_ELA():
                     ELA_true_data_test.append(sheets_1dim[i])
                     Y.append(1)
             excel_num += 1
+            if excel_num % 10 == 0:
+                X = ELA_true_data_test
+                Z = ELA_clf2.predict(X)
+                accuracy = ELA_clf2.score(X, Y)
+                accuracy_set.append(accuracy)
+                X = []
+                Y = []
+                Z = []
 
     excel_num = 0
     for test_fake_list in test_fake_lists:
         if test_fake_list.endswith('ELA.xlsx'):
             inputpath = test_fake + '/' + test_fake_list
             sheets, sheets_1dim = get_ELA(inputpath)
-            if excel_num == 0:
+            if excel_num % 10 == 0:
                 ELA_fake_data_test = sheets_1dim
-                Y += [0] * len(sheets_1dim)
+                Y = [0] * len(sheets_1dim)
             else:
                 for i in range(len(sheets_1dim)):
                     ELA_fake_data_test.append(sheets_1dim[i])
                     Y.append(0)
             excel_num += 1
+            if excel_num % 10 == 0:
+                X = ELA_fake_data_test
+                Z = ELA_clf2.predict(X)
+                accuracy = ELA_clf2.score(X, Y)
+                accuracy_set.append(accuracy)
+                X = []
+                Y = []
+                Z = []
 
-    X = ELA_true_data_test + ELA_fake_data_test
-    ELA_clf2 = joblib.load(savepath + 'ELA_clf.pkl')
-    Z = ELA_clf2.predict(X)
-    accuracy = ELA_clf2.score(X, Y)
-    print('测试数据实际真假：{}'.format(Y))
-    print('测试数据预测真假：{}'.format(Z))
-    print('ELA_clf 预测准确率：{}'.format(accuracy))
-
+    print('ELA_clf average accuracy: {}'.format(
+        sum(accuracy_set)/len(accuracy_set)))
     excel_num = 0
     X = []
     Y = []
+    Z = []
+    accuracy_set = []
 
 
 def print_runtime(function, string):
@@ -306,17 +360,3 @@ if __name__ == '__main__':
     print_runtime(test_SURF, '测试SURF特征SVM分类器')
     print_runtime(train_ELA, '训练ELA特征SVM分类器')
     print_runtime(test_ELA, '测试ELA特征SVM分类器')
-
-    # train_color()
-    # test_color()
-    # train_SURF()
-    # test_SURF()
-    # train_ELA()
-    # test_ELA()
-
-    # 测试get_color,get_SURF,get_ELA用代码
-    # sheets, sheets_1dim = get_ELA(
-    #     'G:/SVM/Train/True/celeba_devel_ELA.xlsx')
-    # print(len(sheets_1dim))
-    # print(len(sheets_1dim[0]))
-    # print(type(sheets_1dim))
