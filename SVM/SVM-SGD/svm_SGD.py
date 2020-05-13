@@ -10,7 +10,7 @@ from GetData.get_ELA import get_ELA
 
 inputpath_train = 'G:/SVM/Train'
 inputpath_test = 'G:/SVM/Test'
-savepath = './Model/'
+savepath = 'G:/SVM/Model/'
 train_true = inputpath_train+'/True'
 train_fake = inputpath_train+'/Fake'
 test_true = inputpath_test+'/True'

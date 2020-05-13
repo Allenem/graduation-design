@@ -923,6 +923,8 @@ Running Time of 测试ELA特征SVM分类器 : 0:00:33.487409
 
 最终分类器准确率大约为 **63%** 上下。估计很大原因是由于训练数据较少，所以准确率较低，未来工作将是大量数据训练和测试。 :muscle:
 
+代码 [svm_SGD_per100img.py](./SVM/SVM-SGD/svm_SGD_per100img.py) 在训练测试大量文件时准确率不高且三者一样，感觉是代码哪里有问题，暂时还没察觉到问题所在，希望有人能看出端倪t提出建议，欢迎 [New issue](https://github.com/Allenem/graduation-design/issues) ！！！
+
 ---
 
 ## 八、完成论文

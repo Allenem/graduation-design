@@ -3,12 +3,12 @@ import pandas as pd
 
 
 def get_SURF(inputpath):
-    print('Excel File Path: {}'.format(inputpath))
-    start = datetime.datetime.now()
+    # # print('Excel File Path: {}'.format(inputpath))
+    # # start = datetime.datetime.now()
     # return a dict {sheet_name:dataframe}
     excel_file = pd.read_excel(inputpath, sheet_name=None)
-    end = datetime.datetime.now()
-    print('Read Excel Time: {}'.format(end - start))
+    # # end = datetime.datetime.now()
+    # # print('Read Excel Time: {}'.format(end - start))
     sheet_num = len(excel_file)
     sheet_names = list(excel_file.keys())  # dict_keys->list
     # print(sheet_names)
