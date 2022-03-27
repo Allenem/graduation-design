@@ -42,6 +42,8 @@ XJ | Celeba(train) | styleGAN | DFDC
 ZS | FFHQ(35001-70000) | starGAN | faceforensic
 PY | Celeba(validation,test) | PGGAN | DeepfakeDetection
 
+Celeba(validation,test)，PGGAN，DeepfakeDetection 数据，百度云链接：链接：https://pan.baidu.com/s/1zjONBZZgDypsGqkUP2Aeww?pwd=3e07 提取码：3e07
+
 ### 2.特征分配
 
 学生 | 特征
