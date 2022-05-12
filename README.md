@@ -1,5 +1,13 @@
 # 针对Deepfake假脸视频面部细节特征的提取算法
 
+## 2022年5月12日17:05:22更新：
+
+详见 [Spectrum_SVM4Image_and_Resnet_LSTM4Video](./Spectrum_SVM4Image_and_Resnet_LSTM4Video/) 文件夹
+
+添加 **Spectrum特征输入SVM** 图像Real/Fake分类器，准确率达到99%；
+
+添加深度学习网络 **ResNet+LSTM** 进行视频Real/Fake分类，准确率达到接近90%，实验有点过拟合。
+
 ## 目录
 
 - [x] [仓库说明](#一仓库说明)
