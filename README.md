@@ -1,5 +1,11 @@
 # 针对Deepfake假脸视频面部细节特征的提取算法
 
+## 2025年6月2日20:12:06更新
+
+这篇综述 [50 Years of Automated Face Recognition](https://www.arxiv.org/abs/2505.24247) 记录了人脸识别的历史和技术进步，从早期的几何和统计方法到利用海量真实数据集和的深度神经架构，并探讨了该领域的关键创新，包括数据集、损失函数、神经网络设计和特征融合等方面 👍可供参考！
+
+![image](https://github.com/user-attachments/assets/0392e424-57ef-418d-9525-aca6b99fc39b)
+
 ## 2022年5月12日17:05:22更新：
 
 详见 [Spectrum_SVM4Image_and_Resnet_LSTM4Video](./Spectrum_SVM4Image_and_Resnet_LSTM4Video/) 文件夹
